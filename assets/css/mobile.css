@@ -1,0 +1,420 @@
+/* Mobile-specific styles */
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #121212 !important;
+        color: #e0e0e0 !important;
+    }
+
+    .card {
+        background-color: #1e1e1e;
+    }
+
+    a {
+        color: #64b5f6;
+    }
+
+    .nav-menu {
+        background: #1e1e1e;
+        border-bottom: 1px solid #333;
+    }
+}
+
+/* Animations and transitions */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Gesture support */
+@media (hover: none) {
+    .swipe-area {
+        touch-action: pan-x pan-y;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Mobile-first breakpoints */
+@media screen and (max-width: 480px) {
+    /* Extra small devices */
+    body {
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    /* Small to medium devices */
+    body {
+        font-size: 16px;
+    }
+}
+
+/* Main mobile styles */
+@media screen and (max-width: 768px) {
+    /* Base layout adjustments */
+    .page, .main, .wrapper {
+        padding: 0 1rem;
+        margin: 0;
+        width: 100%;
+    }
+
+    body {
+        padding-top: 20px;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    /* Improved text readability on mobile */
+    p, li, dl {
+        font-size: 16px !important;
+        line-height: 1.6 !important;
+        margin-bottom: 1.2em;
+    }
+
+    /* Header adjustments */
+    h1 {
+        font-size: 24px !important;
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        font-size: 20px !important;
+        margin-bottom: 12px;
+    }
+
+    h3 {
+        font-size: 18px !important;
+        margin-bottom: 10px;
+    }
+
+    /* Image responsiveness */
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 1.5em auto;
+    }
+
+    /* Better touch targets */
+    a, button {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 12px;
+        display: inline-block;
+    }
+
+    /* Improved spacing */
+    .section {
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+    }
+
+    /* Table responsiveness */
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Better form elements */
+    input, select, textarea {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+        max-width: 100%;
+        padding: 12px;
+    }
+
+    /* Navigation improvements */
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #fff;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+
+    /* Card layouts */
+    .card {
+        margin: 1rem 0;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Better spacing for lists */
+    ul, ol {
+        padding-left: 1.5rem;
+    }
+
+    /* Grid adjustments */
+    .col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
+    .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Better button styles */
+    .button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        text-align: center;
+        margin: 10px 0;
+        border-radius: 6px;
+    }
+
+    /* Improved code blocks */
+    pre {
+        padding: 1rem;
+        overflow-x: auto;
+        font-size: 14px;
+        white-space: pre-wrap;
+    }
+
+    /* Footer adjustments */
+    footer {
+        padding: 2rem 1rem;
+        text-align: center;
+    }
+
+    /* Mobile Navigation Enhancements */
+    .mobile-nav-toggle {
+        display: block;
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        z-index: 1001;
+        width: 44px;
+        height: 44px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    .mobile-menu {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .mobile-menu.active {
+        transform: translateX(0);
+    }
+
+    /* Loading states */
+    .loading {
+        position: relative;
+    }
+
+    .loading::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(4px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Scroll animations */
+    .scroll-reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s ease-out;
+    }
+
+    .scroll-reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Mobile-friendly forms */
+    input, select, textarea {
+        -webkit-appearance: none;
+        border-radius: 8px;
+        border: 2px solid #ddd;
+        transition: border-color 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+        border-color: #0366d6;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.2);
+    }
+
+    /* Better mobile typography */
+    .mobile-text-adjust {
+        text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    /* Improved mobile cards */
+    .mobile-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .mobile-card:active {
+        transform: scale(0.98);
+    }
+
+    /* Mobile grid system */
+    .mobile-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    /* Mobile-friendly buttons */
+    .mobile-button {
+        position: relative;
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: none;
+        background: #0366d6;
+        color: white;
+        font-weight: 600;
+        overflow: hidden;
+    }
+
+    .mobile-button::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 0.3s ease-out;
+    }
+
+    .mobile-button:active::after {
+        transform: translate(-50%, -50%) scale(2);
+    }
+
+    /* Floating action button */
+    .fab {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: #0366d6;
+        color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s ease;
+        z-index: 1000;
+    }
+
+    .fab:active {
+        transform: scale(0.95);
+    }
+
+    /* Mobile-friendly scrollbars */
+    .custom-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: #0366d6 #f0f0f0;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f0f0f0;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #0366d6;
+        border-radius: 3px;
+    }
+
+    /* Safe area insets for modern mobile devices */
+    .safe-area-padding {
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    /* Mobile-optimized images */
+    .lazy-image {
+        transition: opacity 0.3s ease;
+        opacity: 0;
+    }
+
+    .lazy-image.loaded {
+        opacity: 1;
+    }
+
+    /* Mobile gestures */
+    .swipeable {
+        touch-action: pan-x;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    /* Mobile-friendly tooltips */
+    .mobile-tooltip {
+        position: relative;
+    }
+
+    .mobile-tooltip::before {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 8px 12px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        border-radius: 4px;
+        font-size: 14px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease;
+    }
+
+    .mobile-tooltip:active::before {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+/* Print styles for mobile */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    img {
+        max-width: 100% !important;
+        page-break-inside: avoid;
+    }
+}
