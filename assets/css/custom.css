@@ -37,14 +37,26 @@ body {
     color: #333333 !important;
 }
 
+/* Move About section up to align with photo */
+#about {
+    margin-top: -2em !important;
+    padding-top: 0 !important;
+}
+
 /* Hide main page scrollbar while keeping functionality */
-html {
+html, body {
     scrollbar-width: none;  /* Firefox */
     -ms-overflow-style: none;  /* IE and Edge */
 }
 
-html::-webkit-scrollbar {
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
     display: none;  /* Chrome, Safari */
+}
+
+/* Ensure proper spacing after sections */
+section {
+    margin-bottom: 2em;
 }
 
 
