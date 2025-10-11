@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" dir="ltr">
+ <head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="content-language" content="en-US"/>
+  <meta name="language" content="English"/>
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
+  <title>Install TensorFlow GPU on WSL2/Ubuntu 24.04 (Windows 10/11) | CUDA, cuDNN, TensorRT & PyTorch - GPU - Harsh Shinde</title>
+  <meta name="description" content="Complete guide to installing TensorFlow GPU with CUDA, cuDNN, TensorRT & PyTorch on WSL2/Ubuntu 24.04 for Windows 10/11. Step-by-step instructions for deep learning setup with GPU support."/>
+  <link rel="icon" type="image/x-icon" href="../images/favicon.ico"/>
+  <link href="../assets/css/main.css" rel="stylesheet"/>
+  <link href="../assets/css/style.css" rel="stylesheet"/>
+  <link href="../assets/css/mobile.css" rel="stylesheet"/>
+  <link href="../assets/css/custom.css" rel="stylesheet"/>
+  <link href="../assets/css/experience.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+  <style>
+    .blog-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2em;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #2c3e50;
+      line-height: 1.7;
+    }
+    .blog-content img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 2.5em auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .blog-content h1 {
+      font-size: 2.5em;
+      margin-bottom: 1em;
+      color: #1a237e;
+      text-align: center;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .blog-content h2 {
+      font-size: 1.8em;
+      margin: 2em 0 1em;
+      color: #1565c0;
+      border-bottom: 2px solid #e3f2fd;
+      padding-bottom: 0.3em;
+    }
+    .blog-content p {
+      font-size: 1.1em;
+      line-height: 1.8;
+      margin-bottom: 1.5em;
+      color: #37474f;
+    }
+    .blog-date {
+      text-align: center;
+      color: #666;
+      font-size: 1.1em;
+      margin: -0.5em 0 2em;
+      font-style: italic;
+    }
+    .command-block {
+      background-color: #1e1e1e;
+      padding: 1.2em;
+      border-radius: 8px;
+      margin: 1.5em 0;
+      font-family: 'Fira Code', Consolas, Monaco, monospace;
+      line-height: 1.6;
+      position: relative;
+    }
+    .command {
+      color: #e0e0e0;
+      font-weight: 500;
+      margin-bottom: 0.5em;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+    .command-description {
+      color: #8a8a8a;
+      margin-left: 1em;
+      font-size: 0.9em;
+      border-left: 2px solid #404040;
+      padding-left: 1em;
+      margin-top: 0.5em;
+    }
+    .copy-button {
+      position: absolute;
+      top: 0.5em;
+      right: 0.5em;
+      background: #404040;
+      border: none;
+      color: #e0e0e0;
+      padding: 0.3em 0.6em;
+      border-radius: 4px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .copy-button:hover {
+      background: #505050;
+    }
+    .note-box {
+      background-color: #e3f2fd;
+      padding: 1.5em;
+      border-radius: 8px;
+      margin: 2em 0;
+      border-left: 4px solid #1565c0;
+    }
+    .warning-box {
+      background-color: #fff3e0;
+      padding: 1.5em;
+      border-radius: 8px;
+      margin: 2em 0;
+      border-left: 4px solid #ef6c00;
+    }
+    .note-box h3, .warning-box h3 {
+      margin-top: 0;
+      margin-bottom: 1em;
+      color: #1565c0;
+    }
+    .warning-box h3 {
+      color: #ef6c00;
+    }
+    .prerequisites {
+      background-color: #f5f5f5;
+      padding: 1.5em;
+      border-radius: 8px;
+      margin: 2em 0;
+    }
+    .prerequisites h3 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+    .prerequisites ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .prerequisites li {
+      margin-bottom: 1em;
+      padding-left: 1.5em;
+      position: relative;
+    }
+    .prerequisites li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #4caf50;
+    }
+    .version-info {
+      display: inline-block;
+      background: #e8f5e9;
+      padding: 0.2em 0.6em;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: #2e7d32;
+      font-family: 'Fira Code', monospace;
+    }
+    @media (max-width: 768px) {
+      .blog-content {
+        padding: 1em;
+      }
+      .blog-content h1 {
+        font-size: 2em;
+      }
+      .blog-content h2 {
+        font-size: 1.5em;
+      }
+      .blog-content p {
+        font-size: 1em;
+      }
+      .command-block {
+        padding: 1em;
+      }
+    }
+  </style>
+ </head>
+ <body>
+  <div class="masthead">
+   <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+     <nav class="greedy-nav" id="site-nav">
+      <button>
+       <div class="navicon"></div>
+      </button>
+      <ul class="visible-links">
+       <li class="masthead__menu-item masthead__menu-item--lg persist">
+        <a href="../index.html">Harsh Shinde</a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../index.html#about">About</a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../index.html#publications">Publications</a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../index.html#projects">Projects</a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../index.html#awards">Awards</a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../blogs.html">Blogs</a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../assets/Harsh_Shinde_Resume.pdf" type="application/pdf">CV</a>
+       </li>
+      </ul>
+     </nav>
+    </div>
+   </div>
+  </div>
+
+  <div id="main" role="main">
+    <div class="blog-content">
+      <h1>Install TensorFlow GPU on WSL2/Ubuntu 24.04 (Windows 10/11) | CUDA, cuDNN, TensorRT & PyTorch - GPU</h1>
+      <p class="blog-date">July 04, 2024 • Harsh Shinde</p>
+
+      <div class="prerequisites">
+        <h3>Prerequisites</h3>
+        <ul>
+          <li>Windows 10 (Build 19044 or higher) or Windows 11</li>
+          <li>WSL2 installed and running Ubuntu 24.04</li>
+          <li>NVIDIA GPU with compute capability 3.5 or higher</li>
+          <li>Latest NVIDIA drivers installed on Windows</li>
+        </ul>
+      </div>
+
+      <h2>Step 1: System Update</h2>
+      <p>First, update your system and install essential build tools:</p>
+      
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">sudo apt update
+sudo apt upgrade -y
+sudo apt install build-essential -y</div>
+        <div class="command-description">Update system packages and install build tools</div>
+      </div>
+
+      <h2>Step 2: Install Miniconda</h2>
+      <p>Install Miniconda for managing Python environments:</p>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh</div>
+        <div class="command-description">Download and install Miniconda</div>
+      </div>
+
+      <h2>Step 3: Install CUDA</h2>
+      <p>Download and install NVIDIA CUDA Toolkit:</p>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">wget https://developer.download.nvidia.com/compute/cuda/12.1.1/local_installers/cuda_12.1.1_530.30.02_linux.run
+sudo sh cuda_12.1.1_530.30.02_linux.run</div>
+        <div class="command-description">Download and install CUDA <span class="version-info">12.1.1</span></div>
+      </div>
+
+      <div class="note-box">
+        <h3>Environment Setup</h3>
+        <p>Add CUDA to your PATH and LD_LIBRARY_PATH by editing <code>~/.bashrc</code>:</p>
+      </div>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">export PATH=/usr/local/cuda-12.1/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda-12.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}</div>
+        <div class="command-description">Add these lines to ~/.bashrc</div>
+      </div>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">source ~/.bashrc</div>
+        <div class="command-description">Apply the changes</div>
+      </div>
+
+      <p>Configure dynamic linker run-time bindings:</p>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">/usr/local/cuda-12.1/lib64</div>
+        <div class="command-description">Add this line to /etc/ld.so.conf</div>
+      </div>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">sudo ldconfig</div>
+        <div class="command-description">Update the dynamic linker</div>
+      </div>
+
+      <p>Verify the CUDA installation:</p>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">echo $PATH
+echo $LD_LIBRARY_PATH
+sudo ldconfig -p | grep cuda
+nvcc --version</div>
+        <div class="command-description">Verify CUDA installation and paths</div>
+      </div>
+
+      <h2>Step 4: Install cuDNN</h2>
+      <div class="note-box">
+        <h3>Note</h3>
+        <p>Download cuDNN from the <a href="https://developer.nvidia.com/rdp/cudnn-archive" target="_blank">NVIDIA cuDNN Archive</a> (requires free NVIDIA Developer account).</p>
+      </div>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">tar -xvf cudnn-linux-x86_64-8.9.7.29_cuda12-archive.tar.xz
+cd cudnn-linux-x86_64-8.9.7.29_cuda12-archive
+sudo cp include/cudnn*.h /usr/local/cuda-12.1/include
+sudo cp lib/libcudnn* /usr/local/cuda-12.1/lib64
+sudo chmod a+r /usr/local/cuda-12.1/include/cudnn*.h /usr/local/cuda-12.1/lib64/libcudnn*
+cd ..</div>
+        <div class="command-description">Install cuDNN <span class="version-info">8.9.7</span></div>
+      </div>
+
+      <div class="warning-box">
+        <h3>Optional: Test cuDNN Installation</h3>
+        <p>Create a test file <code>test_cudnn.c</code> with the following content:</p>
+      </div>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">#include <cudnn.h>
+#include <stdio.h>
+
+int main() {
+    cudnnHandle_t handle;
+    cudnnStatus_t status = cudnnCreate(&handle);
+    if (status == CUDNN_STATUS_SUCCESS) {
+        printf("cuDNN successfully initialized.\n");
+    } else {
+        printf("cuDNN initialization failed.\n");
+    }
+    cudnnDestroy(handle);
+    return 0;
+}</div>
+        <div class="command-description">Test code for cuDNN</div>
+      </div>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">gcc -o test_cudnn test_cudnn.c -I/usr/local/cuda-12.1/include -L/usr/local/cuda-12.1/lib64 -lcudnn
+./test_cudnn</div>
+        <div class="command-description">Compile and run cuDNN test</div>
+      </div>
+
+      <h2>Step 5: Install TensorRT</h2>
+      <div class="note-box">
+        <h3>Note</h3>
+        <p>Download TensorRT from <a href="https://developer.nvidia.com/tensorrt/download" target="_blank">NVIDIA TensorRT</a> page.</p>
+      </div>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">tar -xzvf TensorRT-8.6.1.6.Linux.x86_64-gnu.cuda-12.0.tar.gz
+sudo mv TensorRT-8.6.1.6 /usr/local/TensorRT-8.6.1</div>
+        <div class="command-description">Extract and install TensorRT</div>
+      </div>
+
+      <p>Update your environment variables:</p>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">export PATH=/usr/local/cuda-12.1/bin:/usr/local/TensorRT-8.6.1/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda-12.1/lib64:/usr/local/TensorRT-8.6.1/lib:$LD_LIBRARY_PATH</div>
+        <div class="command-description">Add these lines to ~/.bashrc</div>
+      </div>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">source ~/.bashrc</div>
+        <div class="command-description">Apply the changes</div>
+      </div>
+
+      <h2>Step 6: Create Conda Environment and Install TensorFlow</h2>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">conda create --name tf python=3.9 -y
+conda activate tf
+python -m pip install tensorflow[and-cuda]</div>
+        <div class="command-description">Create environment and install TensorFlow</div>
+      </div>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"</div>
+        <div class="command-description">Verify TensorFlow GPU support</div>
+      </div>
+
+      <h2>Step 7: Install TensorRT Python Bindings</h2>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">cd /usr/local/TensorRT-8.6.1/python
+pip install tensorrt-8.6.1-cp39-none-linux_x86_64.whl
+pip install tensorrt_dispatch-8.6.1-cp39-none-linux_x86_64.whl
+pip install tensorrt_lean-8.6.1-cp39-none-linux_x86_64.whl</div>
+        <div class="command-description">Install TensorRT Python packages</div>
+      </div>
+
+      <h2>Step 8: Install JupyterLab</h2>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">pip install jupyterlab
+jupyter lab</div>
+        <div class="command-description">Install and launch JupyterLab</div>
+      </div>
+
+      <h2>Step 9: Install PyTorch with GPU Support</h2>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu121</div>
+        <div class="command-description">Install PyTorch with CUDA support</div>
+      </div>
+
+      <div class="command-block">
+        <button class="copy-button">Copy</button>
+        <div class="command">python -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0))"</div>
+        <div class="command-description">Verify PyTorch GPU support</div>
+      </div>
+
+      <div class="warning-box">
+        <h3>Troubleshooting</h3>
+        <p>If you encounter any issues:</p>
+        <ul>
+          <li>Ensure your NVIDIA drivers are up to date on Windows</li>
+          <li>Check if WSL2 can see your GPU: <code>nvidia-smi</code></li>
+          <li>Verify environment variables: <code>echo $LD_LIBRARY_PATH</code></li>
+          <li>Make sure you're using the correct CUDA version for your GPU</li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <h3>Performance Tips</h3>
+        <p>To optimize GPU performance:</p>
+        <ul>
+          <li>Use TensorRT for inference optimization</li>
+          <li>Enable mixed precision training when possible</li>
+          <li>Monitor GPU memory usage with <code>nvidia-smi</code></li>
+          <li>Consider using Docker containers for isolated environments</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="page__footer">
+    <footer>
+      <div class="page__footer-copyright">
+        © <span id="current-year"></span> Harsh Shinde. 
+        Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a>.
+      </div>
+    </footer>
+  </div>
+
+  <script src="../assets/js/main.min.js"></script>
+  <script src="../assets/js/auto-date.js"></script>
+  <script>
+    // Add click-to-copy functionality
+    document.querySelectorAll('.copy-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const commandBlock = button.parentElement;
+        const command = commandBlock.querySelector('.command').textContent;
+        navigator.clipboard.writeText(command);
+        
+        button.textContent = 'Copied!';
+        setTimeout(() => {
+          button.textContent = 'Copy';
+        }, 2000);
+      });
+    });
+  </script>
+ </body>
+</html>

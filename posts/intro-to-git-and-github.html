@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" dir="ltr">
+ <head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="content-language" content="en-US"/>
+  <meta name="language" content="English"/>
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
+  <title>An Intro to Git and GitHub - Harsh Shinde</title>
+  <meta name="description" content="Learn about Git and GitHub, essential tools for version control and collaborative software development."/>
+  <link rel="icon" type="image/x-icon" href="../images/favicon.ico"/>
+  <link href="../assets/css/main.css" rel="stylesheet"/>
+  <link href="../assets/css/style.css" rel="stylesheet"/>
+  <link href="../assets/css/mobile.css" rel="stylesheet"/>
+  <link href="../assets/css/custom.css" rel="stylesheet"/>
+  <link href="../assets/css/experience.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+  <style>
+    .blog-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2em;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #2c3e50;
+      line-height: 1.7;
+    }
+    .blog-content img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 2.5em auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .blog-content h1 {
+      font-size: 2.5em;
+      margin-bottom: 1em;
+      color: #1a237e;
+      text-align: center;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .blog-content h2 {
+      font-size: 1.8em;
+      margin: 2em 0 1em;
+      color: #1565c0;
+      border-bottom: 2px solid #e3f2fd;
+      padding-bottom: 0.3em;
+    }
+    .blog-content p {
+      font-size: 1.1em;
+      line-height: 1.8;
+      margin-bottom: 1.5em;
+      color: #37474f;
+    }
+    .blog-content a {
+      color: #1565c0;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+    .blog-content a:hover {
+      border-bottom-color: #1565c0;
+    }
+    .blog-content ul, .blog-content ol {
+      margin: 1.5em 0;
+      padding-left: 2em;
+    }
+    .blog-content li {
+      margin-bottom: 0.8em;
+      line-height: 1.6;
+    }
+    .blog-content pre {
+      background-color: #f8f9fa;
+      padding: 1em;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1.5em 0;
+      border: 1px solid #e3f2fd;
+    }
+    .blog-content code {
+      font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', monospace;
+      font-size: 0.9em;
+      color: #0d47a1;
+      background-color: #f5f7f9;
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+    }
+    .command-block {
+      background-color: #f8f9fa;
+      padding: 1.2em;
+      border-radius: 8px;
+      border-left: 4px solid #1565c0;
+      margin: 1.5em 0;
+      font-family: 'Fira Code', Consolas, Monaco, monospace;
+      line-height: 1.6;
+    }
+    .command {
+      color: #0d47a1;
+      font-weight: 500;
+      margin-bottom: 0.5em;
+    }
+    .command-description {
+      color: #546e7a;
+      margin-left: 1em;
+    }
+    .note-box {
+      background-color: #e3f2fd;
+      padding: 1.5em;
+      border-radius: 8px;
+      margin: 2em 0;
+      border-left: 4px solid #1565c0;
+    }
+    .note-box h3 {
+      color: #1565c0;
+      margin-top: 0;
+      margin-bottom: 1em;
+    }
+    .note-box p {
+      margin-bottom: 1em;
+    }
+    .note-box p:last-child {
+      margin-bottom: 0;
+    }
+    .resources-section {
+      background-color: #f8f9fa;
+      padding: 2em;
+      border-radius: 8px;
+      margin: 3em 0;
+    }
+    .resources-section h2 {
+      margin-top: 0;
+    }
+    .resources-section ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .resources-section li {
+      margin-bottom: 1em;
+    }
+    .resources-section a {
+      color: #1565c0;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+    .resources-section a:hover {
+      border-bottom-color: #1565c0;
+    }
+    .image-caption {
+      text-align: center;
+      color: #666;
+      font-size: 0.9em;
+      margin-top: -1em;
+      margin-bottom: 2em;
+    }
+    @media (max-width: 768px) {
+      .blog-content {
+        padding: 1em;
+      }
+      .blog-content h1 {
+        font-size: 2em;
+      }
+      .blog-content h2 {
+        font-size: 1.5em;
+      }
+      .blog-content p {
+        font-size: 1em;
+      }
+    }
+  </style>
+ </head>
+ <body>
+  <div class="masthead">
+   <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+     <nav class="greedy-nav" id="site-nav">
+      <button>
+       <div class="navicon">
+       </div>
+      </button>
+      <ul class="visible-links">
+       <li class="masthead__menu-item masthead__menu-item--lg persist">
+        <a href="../index.html">
+         Harsh Shinde
+        </a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../index.html#about">
+         About
+        </a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../index.html#publications">
+         Publications
+        </a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../index.html#projects">
+         Projects
+        </a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../index.html#awards">
+         Awards
+        </a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../blogs.html">
+         Blogs
+        </a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../assets/Harsh_Shinde_Resume.pdf" type="application/pdf">
+         CV
+        </a>
+       </li>
+      </ul>
+     </nav>
+    </div>
+   </div>
+  </div>
+
+  <div id="main" role="main">
+    <div class="blog-content">
+      <h1>An Intro to Git and GitHub</h1>
+      <p class="blog-date">August 15, 2023 • Harsh Shinde</p>
+
+      <p>Git and GitHub have become popular standards in the software development process. Here's an introduction to how you can utilize both to write code and build applications.</p>
+
+      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*yoJvXNQOTVBKx3mWMGsuyg.png" alt="Git and GitHub overview">
+
+      <h2>What Is Git?</h2>
+      <p>Git is a free and open source distributed version control system. What is version control? Essentially, it's a system that allows you to record changes to files over time, thus, you can view specific versions of those files later on.</p>
+
+      <h2>Why Use Git?</h2>
+      <p>Over time, Git has become an industry standard for development. Being able to snapshot your code at a specific time is incredibly helpful as your codebase grows and you have to reference previous versions of it.</p>
+
+      <h2>How It Works</h2>
+      <p>With Git, you record local changes to your code using a command-line tool, called the "Git Shell" (you can use Git in other command-line tools — I'll refer to Git Shell through the following sections). Command-line lets you enter commands to view, change, and manage files and folders in a simple terminal, instead of using a graphical user interface (GUI). If you have not used command-line before, don't worry, once you get started, it is incredibly straightforward.</p>
+
+      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*Zy9ODtdlufYcFlb5BKHd0w.png" alt="Git workflow diagram">
+      <p class="image-caption">Basic Git Workflow</p>
+
+      <p>Essentially, when using Git, you make changes to your code files as you normally would during the development process. When you have completed a coding milestone, or want to snapshot certain changes, you add the files you changed to a staging area and then commit them to the version history of your project (repository) using Git. Below, you'll learn about the Git commands you use for those steps.</p>
+
+      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*1WAfbk9B8I1Oru2zkn7v8A.png" alt="Git staging area visualization">
+      <p class="image-caption">Git Staging Area</p>
+
+      <h2>Terminal Commands</h2>
+      <p>While using Git on the command line, chances are you will also use some basic terminal commands while going through your project and system files / folders, including:</p>
+
+      <div class="command-block">
+        <div class="command">pwd</div>
+        <div class="command-description">Check where you are in the current file system</div>
+        
+        <div class="command">ls</div>
+        <div class="command-description">List files in the current directory (folder)</div>
+        
+        <div class="command">cd [directory-name]</div>
+        <div class="command-description">Moves to the given directory name or path</div>
+        
+        <div class="command">mkdir [directory-name]</div>
+        <div class="command-description">Makes a new directory with the given name</div>
+      </div>
+
+      <h2>Creating Repositories</h2>
+      <p>When you wish to utilize Git for a project, the first command you must do is git init, with the name of your project:</p>
+
+      <div class="command-block">
+        <div class="command">git init [project-name]</div>
+      </div>
+
+      <p>You run this command on the Git Shell command-line in the main directory (folder) of your project, which you can navigate to in the Shell using the commands listed above. Once you run this command, Git creates a hidden .git file inside the main directory of your project. This file tracks the version history of your project and is what turns the project into a Git repository, enabling you to run Git commands on it.</p>
+
+      <h2>Making Changes</h2>
+      <div class="command-block">
+        <div class="command">git add [file]</div>
+        <div class="command">git add *</div>
+        <div class="command-description">Add files to the staging area</div>
+      </div>
+
+      <p>Once you make changes to your files and choose to snapshot them to your project's version history, you have to add them to the staging area with git add, by file name, or by including all of the files in your current folder using git add *.</p>
+
+      <div class="command-block">
+        <div class="command">git commit -m "[message]"</div>
+        <div class="command-description">Commit your changes with a descriptive message</div>
+      </div>
+
+      <p>To finally commit the changes you made to your files from the staging area to your repository's version history, you need to run git commit with a descriptive message of what changes you made.</p>
+
+      <div class="command-block">
+        <div class="command">git status</div>
+        <div class="command-description">View the status of your working directory</div>
+      </div>
+
+      <p>If at any point, you wish to view a summary of the files you have changed and not yet committed, simply run git status in your project's repository on the Git Shell command-line.</p>
+
+      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*9htEwsYdqPHIboA5Vaf-6w.png" alt="Git workflow detailed diagram">
+      <p class="image-caption">Detailed Git Workflow</p>
+
+      <h2>Working with GitHub</h2>
+      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*iE43cfR7x2wuH79YwJ3KDw.png" alt="GitHub collaboration">
+      <p class="image-caption">GitHub Collaboration Flow</p>
+
+      <h2>Overview</h2>
+      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*TV84y3tN-bFj13alcd0gSg.png" alt="GitHub features overview">
+
+      <p>In essence, GitHub is a service that allows you to host your Git repositories online and collaborate with others on them. You can use GitHub through their web portal as well as the GitHub desktop GUI and the Git Shell.</p>
+
+      <p>As a service, GitHub is now used by 12 million developers and organizations, and has become a fairly popular standard for collaborating on projects and open-sourcing code.</p>
+
+      <h2>How GitHub Works</h2>
+      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*F6xnO9PnASvjVOApQOh9PQ.png" alt="GitHub workflow">
+
+      <p>With GitHub, you have the same local process of adding and committing files to an initialized Git repository on your computer. However, you can utilize GitHub to push your changes to GitHub's hosting service. This allows other people to similarly work on the same project, pull your changes to their computers, and push their own changes to GitHub.</p>
+
+      <h2>Creating & Copying Repositories</h2>
+      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*R6fwDmu_hGs70JS0tkOXCw.png" alt="GitHub fork process">
+
+      <p>With Git on your local computer, if you want to create a new repository, you must run git init. However, many times you may work on projects that are hosted on GitHub and have already been initialized.</p>
+
+      <p>One of the ways to copy a repository to your GitHub account is using fork, which is available on GitHub's website.</p>
+
+      <div class="command-block">
+        <div class="command">git clone [url]</div>
+        <div class="command-description">Clone a repository to your local machine</div>
+      </div>
+
+      <h2>Pushing & Pulling Changes</h2>
+      <div class="command-block">
+        <div class="command">git push [repo] [branch]</div>
+        <div class="command-description">Push your changes to GitHub</div>
+        
+        <div class="command">git pull</div>
+        <div class="command-description">Pull latest changes from GitHub</div>
+      </div>
+
+      <div class="note-box">
+        <h3>Important Note about Merge Conflicts</h3>
+        <p>It is important to remember, that while you may have a repository hosted on GitHub, the version history of your local copy can be different than the version history of your repository online.</p>
+        <p>If you try to pull or push changes to files that have already been changed by someone else, you can run into a merge conflict. You will need to resolve these conflicts manually.</p>
+        <p>For more information, see <a href="https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/" target="_blank">GitHub's guide on resolving merge conflicts</a>.</p>
+      </div>
+
+      <h2>Working with Branches</h2>
+      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*exCFWgo1cXpgCBmrwFRUUg.png" alt="Git branching visualization">
+
+      <p>When using Git, you have the ability to view the version history of your project's development. However, sometimes you may choose to develop features, fix bugs, or experiment in ways where you want to separate your main project's code from another variant.</p>
+
+      <p>You can do this with branches, which are essentially parallel versions of your repository's main code— that code is developed on the "master" branch. You can create multiple branches for collaboration and other unique development to your code.</p>
+
+      <div class="note-box">
+        <h3>Learning More About Branches</h3>
+        <p>To learn more about branches and merging changes, check out <a href="https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell" target="_blank">Git's official documentation on branching</a>.</p>
+      </div>
+
+      <h2>Getting Started</h2>
+      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*ZiV_FIKzVMxgvPbGOs_pnA.png" alt="Getting started with Git and GitHub">
+
+      <p>To get started with Git and GitHub:</p>
+      <ol>
+        <li>Sign up for a GitHub account at <a href="https://github.com" target="_blank">github.com</a></li>
+        <li>Download GitHub's desktop GUI at <a href="https://desktop.github.com" target="_blank">desktop.github.com</a></li>
+        <li>Set up your credentials using the GitHub desktop application or Git Shell</li>
+      </ol>
+
+      <div class="note-box">
+        <h3>GitHub Student Developer Pack</h3>
+        <p>As a student, you can get access to the GitHub Student Developer Pack, which includes benefits from GitHub as well as other partners. Learn more at <a href="https://education.github.com/pack" target="_blank">education.github.com/pack</a>.</p>
+      </div>
+
+      <div class="note-box">
+        <h3>Microsoft Imagine</h3>
+        <p>Microsoft Imagine provides students with professional developer and designer tools at no cost. <a href="https://imagine.microsoft.com/en-us/dashboard" target="_blank">Create an account</a> to get started!</p>
+      </div>
+
+      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*lw5abb-pLlLqfIsjs_Vtgw.png" alt="Additional Git features">
+      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*32-41W_WgIfUVymgW1I0Aw.png" alt="Git and GitHub ecosystem">
+
+      <div class="resources-section">
+        <h2>Additional Resources</h2>
+        <ul>
+          <li> <a href="https://git-scm.com" target="_blank">git-scm.com</a> - The main website and documentation for Git</li>
+          <li> <a href="https://help.github.com" target="_blank">help.github.com</a> - GitHub's help documentation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="page__footer">
+    <footer>
+      <div class="page__footer-copyright">
+        © <span id="current-year"></span> Harsh Shinde. 
+        Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a>.
+      </div>
+    </footer>
+  </div>
+
+  <script src="../assets/js/main.min.js"></script>
+  <script src="../assets/js/auto-date.js"></script>
+ </body>
+</html>
