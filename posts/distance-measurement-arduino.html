@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" dir="ltr">
+ <head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="content-language" content="en-US"/>
+  <meta name="language" content="English"/>
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
+  <title>Distance Measurement using Ultrasonic Sensor and Arduino - Harsh Shinde</title>
+  <meta name="description" content="Learn about distance measurement using ultrasonic sensors with Arduino, including circuit diagrams and complete code implementation."/>
+  <link href="../assets/css/main.css" rel="stylesheet"/>
+  <link href="../assets/css/style.css" rel="stylesheet"/>
+  <link href="../assets/css/mobile.css" rel="stylesheet"/>
+  <link href="../assets/css/custom.css" rel="stylesheet"/>
+  <link href="../assets/css/experience.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+  <style>
+    .blog-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2em;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #2c3e50;
+      line-height: 1.7;
+    }
+    .blog-content img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 2.5em auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .blog-content h1 {
+      font-size: 2.5em;
+      margin-bottom: 1em;
+      color: #1a237e;
+      text-align: center;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .blog-content h2 {
+      font-size: 1.8em;
+      margin: 2em 0 1em;
+      color: #1565c0;
+      border-bottom: 2px solid #e3f2fd;
+      padding-bottom: 0.3em;
+    }
+    .blog-content p {
+      font-size: 1.1em;
+      line-height: 1.8;
+      margin-bottom: 1.5em;
+      color: #37474f;
+    }
+    .code-block-container {
+      position: relative;
+      margin: 2em 0;
+    }
+    .blog-content pre {
+      background-color: #f8f9fa;
+      padding: 1.5em;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 0;
+      border: 1px solid #e3f2fd;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .blog-content code {
+      font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', monospace;
+      font-size: 0.9em;
+      color: #0d47a1;
+    }
+    .copy-button {
+      position: absolute;
+      top: 0.5em;
+      right: 0.5em;
+      padding: 0.5em 1em;
+      background-color: #1565c0;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      transition: background-color 0.3s ease;
+    }
+    .copy-button:hover {
+      background-color: #0d47a1;
+    }
+    .copy-button.copied {
+      background-color: #2e7d32;
+    }
+    .copy-button i {
+      font-size: 1em;
+    }
+    .blog-content ol, .blog-content ul {
+      margin: 1.5em 0;
+      padding-left: 2em;
+    }
+    .blog-content li {
+      margin-bottom: 0.8em;
+      line-height: 1.6;
+    }
+    .note {
+      background-color: #e3f2fd;
+      padding: 1.5em;
+      border-radius: 8px;
+      border-left: 4px solid #1565c0;
+      margin: 2em 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .note p {
+      margin-bottom: 0.5em;
+      color: #1565c0;
+    }
+    .contact-section {
+      margin-top: 4em;
+      padding-top: 2em;
+      border-top: 2px solid #e3f2fd;
+      background-color: #f8f9fa;
+      padding: 2em;
+      border-radius: 8px;
+    }
+    .contact-section h2 {
+      color: #1565c0;
+      margin-top: 0;
+    }
+    .contact-section a {
+      color: #1565c0;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+    .contact-section a:hover {
+      border-bottom-color: #1565c0;
+    }
+    /* Add smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+    /* Style blockquotes */
+    blockquote {
+      margin: 2em 0;
+      padding: 1em 2em;
+      border-left: 4px solid #1565c0;
+      background-color: #f8f9fa;
+      font-style: italic;
+      border-radius: 0 8px 8px 0;
+    }
+    /* Highlight text selection */
+    ::selection {
+      background: #bbdefb;
+      color: #1565c0;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .blog-content {
+        padding: 1em;
+      }
+      .blog-content h1 {
+        font-size: 2em;
+      }
+      .blog-content h2 {
+        font-size: 1.5em;
+      }
+      .blog-content p {
+        font-size: 1em;
+      }
+    }
+  </style>
+ </head>
+ <body>
+  <div class="masthead">
+   <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+     <nav class="greedy-nav" id="site-nav">
+      <button>
+       <div class="navicon">
+       </div>
+      </button>
+      <ul class="visible-links">
+       <li class="masthead__menu-item masthead__menu-item--lg persist">
+        <a href="../index.html">
+         Harsh Shinde
+        </a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../index.html#about">
+         About
+        </a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../index.html#publications">
+         Publications
+        </a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../index.html#projects">
+         Projects
+        </a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../index.html#awards">
+         Awards
+        </a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../blogs.html">
+         Blogs
+        </a>
+       </li>
+       <li class="masthead__menu-item">
+        <a href="../assets/Harsh_Shinde_Resume.pdf" type="application/pdf">
+         CV
+        </a>
+       </li>
+      </ul>
+     </nav>
+    </div>
+   </div>
+  </div>
+
+  <div id="main" role="main">
+    <div class="blog-content">
+      <h1>Distance Measurement using Ultrasonic Sensor and Arduino</h1>
+
+      <h2>Arduino:</h2>
+      <img src="https://cdn.sparkfun.com/assets/9/1/e/4/8/515b4656ce395f8a38000000.png" alt="Arduino Uno board">
+      <p>Arduino is an open-source electronics platform that encompasses both hardware and software components. At its core, Arduino boards feature microcontrollers, such as the popular Atmel AVR family, with built-in input/output pins for interacting with external components. The Arduino Integrated Development Environment (IDE) provides a user-friendly interface to write, compile, and upload code to the board, simplifying programming with its C/C++ language support.</p>
+
+      <h2>Ultrasonic Sensor</h2>
+      <img src="https://robu.in/wp-content/uploads/2014/08/download.jpg" alt="Ultrasonic Sensor">
+      <p>An ultrasonic sensor is a device that uses sound waves at frequencies higher than the human audible range to measure distances and detect objects without physical contact. It works based on the principle of sending ultrasonic pulses and measuring the time it takes for the sound waves to bounce back after hitting an obstacle.</p>
+
+      <h2>Working of Ultrasonic Sensor?</h2>
+      <img src="https://static.packt-cdn.com/products/9781838982461/graphics/assets/04fb297a-ba3e-4828-bef7-85587791b615.png" alt="Working of Ultrasonic Sensor">
+      <p>An ultrasonic sensor works by emitting high-frequency sound waves (ultrasonic pulses) and measuring the time it takes for the waves to bounce back after hitting an object. The sensor then calculates the distance to the object based on the time of flight of the sound waves. This distance measurement technique allows the sensor to detect objects or measure distances without any physical contact, making it useful in various applications such as distance sensing, object detection, and collision avoidance.</p>
+      <div class="formula-section">
+        <p>The speed of sound in air is nearly 344 m/s</p>
+        <div class="formula">
+          <strong>Basic Formula:</strong>
+          <div class="equation">Distance = Speed × Time</div>
+        </div>
+        
+        <p>In the code, the "duration" variable stores the time taken by the sound wave traveling from the emitter to the receiver. This is double the time to reach the object, as the sensor returns the total time including sender to object and object to receiver. Therefore, the time taken to reach the object is half of the total time measured.</p>
+        
+        <div class="formula">
+          <strong>Applied Formula:</strong>
+          <div class="equation">Distance = Speed of Sound in Air × (Time Taken ÷ 2)</div>
+        </div>
+        
+        <div class="note-box">
+          <strong>Note:</strong> Speed of sound in air = 344 m/s
+        </div>
+      </div>
+      <style>
+        .formula-section {
+          background-color: #f8f9fa;
+          padding: 2em;
+          border-radius: 8px;
+          margin: 2em 0;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .formula {
+          margin: 1.5em 0;
+          padding: 1em;
+          background-color: white;
+          border-left: 4px solid #1565c0;
+          border-radius: 4px;
+        }
+        .formula strong {
+          color: #1565c0;
+          display: block;
+          margin-bottom: 0.5em;
+        }
+        .equation {
+          font-family: "Computer Modern", serif;
+          font-size: 1.2em;
+          color: #2c3e50;
+          padding: 0.5em;
+          text-align: center;
+        }
+        .note-box {
+          background-color: #e3f2fd;
+          padding: 1em;
+          border-radius: 4px;
+          margin-top: 1.5em;
+          color: #1565c0;
+        }
+        .note-box strong {
+          margin-right: 0.5em;
+        }
+      </style>
+
+      <h2>16x2 LCD</h2>
+      <img src="https://lastminuteengineers.com/wp-content/uploads/featuredimages/Arduino-Tutorial-for-Interfacing-I2C-LCD.webp" alt="16x2 LCD Display">
+      <p>16×2 Display Features:</p>
+      <p>Some Info are listed below:</p>
+      <ol>
+        <li>A 16x2 LCD, which stands for 16 characters by 2 lines LCD, is a popular alphanumeric display module used in a wide range of electronic applications.</li>
+        <li>It consists of 16 columns and 2 rows of character spaces, allowing it to display up to 16 characters per line and accommodate a total of 32 characters.</li>
+      </ol>
+
+      <h2>Bread board</h2>
+      <p>A "breadboard short" refers to an unintended electrical connection (short circuit) between two or more points on a breadboard. Breadboards are prototyping tools used by electronics enthusiasts, hobbyists, and engineers to build and test circuits without soldering. They consist of a grid of interconnected holes that allow components and wires to be inserted and connected easily.</p>
+      <img src="https://cdn.sparkfun.com/assets/learn_tutorials/4/7/12615-02_Full_Size_Breadboard_Split_Power_Rails.jpg" alt="Breadboard">
+
+      <h2>Circuit Diagram:</h2>
+      <img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1690391762062/5084f275-6bfe-4596-bdcb-cda894013137.jpeg?auto=compress,format&format=webp" alt="Circuit Diagram">
+
+      <h2>Setup:</h2>
+      <ol>
+        <li>Connect the Echo pin of the sensor to the pin of the Arduino.</li>
+        <li>Connect the Trigger pin of the sensor to the pin of the Arduino.</li>
+        <li>Navigate to Tools and select board and port.</li>
+        <li>Verify and compile the code, then upload the code to the Arduino Uno board.</li>
+        <li>Monitor the output in the Serial monitor or in LCD Display.</li>
+      </ol>
+
+      <h2>Arduino Code:</h2>
+      <p><a href="https://github.com/HarshShinde0/Distance-Measurement-using-Ultrasonic-Sensor-and-Arduino" target="_blank">Github Repo</a></p>
+      <div class="code-block-container">
+        <button class="copy-button" onclick="copyCode(this)">
+          <i class="fas fa-copy"></i> Copy Code
+        </button>
+        <pre><code>#include &lt;LiquidCrystal.h&gt;
+
+// initialize the library by associating any needed LCD interface pin
+// with the arduino pin number it is connected to
+long duration;
+int distanceCM;
+int distanceInch;
+const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+void setup() {
+  // set up the LCD's number of columns and rows:
+  lcd.begin(16, 2);
+  // Print a message to the LCD.  
+  pinMode(7,OUTPUT);
+  pinMode(6,INPUT);
+  lcd.clear();
+}
+
+void loop() {
+  delay(120);
+  lcd.clear();
+  digitalWrite(7,LOW);
+  delayMicroseconds(2);
+  digitalWrite(7,HIGH);
+  delayMicroseconds(10);
+  digitalWrite(7,LOW);
+  duration =  pulseIn(6,HIGH);
+  distanceCM = (duration*0.034)/2;
+  distanceInch = (duration*0.0133)/2;
+  lcd.setCursor(0,0);
+  lcd.print("Distance: ");
+  lcd.print(distanceCM);
+  lcd.print(" Cm");
+  delay(10);
+  lcd.setCursor(0,1);
+  lcd.print("Distance: ");
+  lcd.print(distanceInch);
+  lcd.print(" In\"");
+  delay(10);
+}</code></pre>
+      </div>
+
+      <h2>Conclusion:</h2>
+      <p>Indeed! The Ultrasonic sensor is a versatile and widely used sensor in DIY electronics projects. It offers non-contact distance measurement, object detection, and position sensing capabilities, making it ideal for various applications. With the help of an Arduino board, it becomes easy to interface and utilize the sensor's data for a wide range of projects, including robotics, home automation, and more. Its affordability and ease of use make it a popular choice among hobbyists and students for creating innovative and interactive projects.</p>
+
+      <div class="note">
+        <p><strong>NOTE:</strong> All the above projects are hosted in GitHub. There are many other projects based on every topic every language and every technology.</p>
+        <p>Now let's Get Started with it!</p>
+      </div>
+
+      <div class="contact-section">
+        <h2>How to find me here:-</h2>
+        <p>Email: <a href="mailto:harshinde.hks@gmail.com">harshinde.hks@gmail.com</a></p>
+        <p>Portfolio: <a href="https://harshshinde0.github.io/" target="_blank">https://harshshinde0.github.io/</a></p>
+        <p>GitHub: <a href="https://github.com/HarshShinde0" target="_blank">https://github.com/HarshShinde0</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page__footer">
+    <footer>
+      <div class="page__footer-copyright">
+        © <span id="current-year"></span> Harsh Shinde. 
+        Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a>.
+      </div>
+    </footer>
+  </div>
+
+  <script src="../assets/js/main.min.js"></script>
+  <script src="../assets/js/auto-date.js"></script>
+  <script>
+    function copyCode(button) {
+      const codeBlock = button.nextElementSibling.querySelector('code');
+      const text = codeBlock.textContent;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        // Change button text and style to indicate success
+        button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        button.classList.add('copied');
+        
+        // Reset button after 2 seconds
+        setTimeout(() => {
+          button.innerHTML = '<i class="fas fa-copy"></i> Copy Code';
+          button.classList.remove('copied');
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy text: ', err);
+        button.innerHTML = '<i class="fas fa-times"></i> Failed to copy';
+        
+        setTimeout(() => {
+          button.innerHTML = '<i class="fas fa-copy"></i> Copy Code';
+        }, 2000);
+      });
+    }
+  </script>
+ </body>
+</html>
