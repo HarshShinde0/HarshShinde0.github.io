@@ -1,0 +1,41 @@
+name: Build Resume PDF
+
+on:
+  push:
+    paths:
+      - '*.tex'
+      - 'main.tex'
+      - 'resume.tex'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Install LaTeX
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-science
+
+    - name: Build PDF
+      run: |
+        # Build the PDF (run twice for proper references)
+        pdflatex -interaction=nonstopmode main.tex
+        pdflatex -interaction=nonstopmode main.tex
+        
+    - name: Move PDF to assets folder
+      run: |
+        mkdir -p assets
+        cp main.pdf assets/harsh.shinde_resume.pdf
+        
+    - name: Commit and push PDF
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add assets/harsh.shinde_resume.pdf
+        git diff --staged --quiet || git commit -m "🤖 Auto-update resume PDF from LaTeX build"
+        git push
