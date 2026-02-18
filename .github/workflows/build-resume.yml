@@ -42,5 +42,5 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add assets/harsh.shinde_resume.pdf
-        git diff --staged --quiet || git commit -m "🤖 Auto-update resume PDF from LaTeX build"
+        git diff --staged --quiet || git commit -m "Auto-update resume PDF from LaTeX build"
         git push
