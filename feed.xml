@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator>
+  <link href="https://harshshinde0.github.io/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://harshshinde0.github.io/" rel="alternate" type="text/html" />
+  <updated>2025-10-11T00:00:00+00:00</updated>
+  <id>https://harshshinde0.github.io/feed.xml</id>
+  <title type="html">Harsh Shinde</title>
+  <subtitle>Machine Learning &amp; Geospatial AI Researcher</subtitle>
+  <author>
+    <n>Harsh Shinde</n>
+    <email>harshshinde0@outlook.com</email>
+  </author>
+  
+  <entry>
+    <title type="html">AI-ready Dataset Metadata as a Service: Google Summer of Code 2025</title>
+    <link href="https://harshshinde0.github.io/posts/gsoc-2025-metadata-service.html" rel="alternate" type="text/html" />
+    <published>2025-08-31T00:00:00+00:00</published>
+    <updated>2025-08-31T00:00:00+00:00</updated>
+    <id>https://harshshinde0.github.io/posts/gsoc-2025-metadata-service</id>
+    <content type="html" xml:base="https://harshshinde0.github.io/posts/gsoc-2025-metadata-service.html">
+      <![CDATA[Enhancing ZOO-Project with GeoCroissant metadata support for AI-ready geospatial datasets through Google Summer of Code 2025. Integration with STAC, Earth Engine, and HuggingFace.]]>
+    </content>
+    <author>
+      <n>Harsh Shinde</n>
+    </author>
+    <category term="GSoC" />
+    <category term="Geospatial" />
+    <category term="AI" />
+  </entry>
+
+  <entry>
+    <title type="html">Setting up TensorFlow with GPU Support on WSL2</title>
+    <link href="https://harshshinde0.github.io/posts/tensorflow-gpu-wsl2-setup.html" rel="alternate" type="text/html" />
+    <published>2025-07-15T00:00:00+00:00</published>
+    <updated>2025-07-15T00:00:00+00:00</updated>
+    <id>https://harshshinde0.github.io/posts/tensorflow-gpu-wsl2-setup</id>
+    <content type="html" xml:base="https://harshshinde0.github.io/posts/tensorflow-gpu-wsl2-setup.html">
+      <![CDATA[Complete guide to installing TensorFlow GPU with CUDA, cuDNN, TensorRT & PyTorch on WSL2/Ubuntu 24.04 for Windows 10/11.]]>
+    </content>
+    <author>
+      <n>Harsh Shinde</n>
+    </author>
+    <category term="Deep Learning" />
+    <category term="TensorFlow" />
+    <category term="Tutorial" />
+  </entry>
+
+  <entry>
+    <title type="html">Introduction to Git and GitHub</title>
+    <link href="https://harshshinde0.github.io/posts/intro-to-git-and-github.html" rel="alternate" type="text/html" />
+    <published>2025-06-01T00:00:00+00:00</published>
+    <updated>2025-06-01T00:00:00+00:00</updated>
+    <id>https://harshshinde0.github.io/posts/intro-to-git-and-github</id>
+    <content type="html" xml:base="https://harshshinde0.github.io/posts/intro-to-git-and-github.html">
+      <![CDATA[Learn about Git and GitHub, essential tools for version control and collaborative software development.]]>
+    </content>
+    <author>
+      <n>Harsh Shinde</n>
+    </author>
+    <category term="Git" />
+    <category term="GitHub" />
+    <category term="Tutorial" />
+  </entry>
+
+  <entry>
+    <title type="html">Distance Measurement using Arduino</title>
+    <link href="https://harshshinde0.github.io/posts/distance-measurement-arduino.html" rel="alternate" type="text/html" />
+    <published>2025-05-15T00:00:00+00:00</published>
+    <updated>2025-05-15T00:00:00+00:00</updated>
+    <id>https://harshshinde0.github.io/posts/distance-measurement-arduino</id>
+    <content type="html" xml:base="https://harshshinde0.github.io/posts/distance-measurement-arduino.html">
+      <![CDATA[Learn about distance measurement using ultrasonic sensors with Arduino, including circuit diagrams and complete code implementation.]]>
+    </content>
+    <author>
+      <n>Harsh Shinde</n>
+    </author>
+    <category term="Arduino" />
+    <category term="Hardware" />
+    <category term="Tutorial" />
+  </entry>
+</feed>

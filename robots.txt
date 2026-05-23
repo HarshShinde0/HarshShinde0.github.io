@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Sitemap: https://harshshinde0.github.io/sitemap.xml
+
+# Allow all robots complete access
+Disallow:
+
+# Prevent caching of certain file types
+Disallow: /*.pdf$
+Disallow: /*.gif$

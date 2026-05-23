@@ -1,0 +1,907 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Radar Object Detector Using Arduino - Harsh Shinde</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Harsh Shinde">
+<meta property="og:title" content="Radar Object Detector Using Arduino">
+
+
+  <link rel="canonical" href="http://localhost:4000/arduino-radar/">
+  <meta property="og:url" content="http://localhost:4000/arduino-radar/">
+
+
+
+  <meta property="og:description" content="Learn how to build an interactive, desktop sweep radar system by combining an Arduino, an ultrasonic sensor, and a real-time GUI visualizer built with Processing 4.">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2023-09-10T00:00:00+05:30">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Harsh Shinde",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Harsh Shinde Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="http://localhost:4000/images/apple-touch-icon-57x57.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="60x60" href="http://localhost:4000/images/apple-touch-icon-60x60.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="76x76" href="http://localhost:4000/images/apple-touch-icon-76x76.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="120x120" href="http://localhost:4000/images/apple-touch-icon-120x120.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="152x152" href="http://localhost:4000/images/apple-touch-icon-152x152.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/images/apple-touch-icon-180x180.png?v=M44lzPylqQ">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-32x32.png?v=M44lzPylqQ" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/android-chrome-192x192.png?v=M44lzPylqQ" sizes="192x192">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-96x96.png?v=M44lzPylqQ" sizes="96x96">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-16x16.png?v=M44lzPylqQ" sizes="16x16">
+<link rel="manifest" href="http://localhost:4000/images/manifest.json?v=M44lzPylqQ">
+<link rel="mask-icon" href="http://localhost:4000/images/safari-pinned-tab.svg?v=M44lzPylqQ" color="#000000">
+<link rel="shortcut icon" href="/images/favicon.ico?v=M44lzPylqQ">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="http://localhost:4000/images/mstile-144x144.png?v=M44lzPylqQ">
+<meta name="msapplication-config" content="http://localhost:4000/images/browserconfig.xml?v=M44lzPylqQ">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/academicons.css"/>
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/">Harsh Shinde</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/portfolio/">Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Blogs</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/files/HarshResume.pdf">Resume</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="http://localhost:4000/images/profile.png" class="author__avatar" alt="Harsh Shinde">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Harsh Shinde</h3>
+    <p class="author__bio">Machine Learning & Geo-AI</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> India</li>
+      
+      
+      
+      
+        <li><a href="mailto:harshinde.hks@gmail.com"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+      
+      
+       
+      
+        <li><a href="https://twitter.com/harshinde_hks"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+      
+      
+        <li><a href="https://www.linkedin.com/in/harshshinde"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/HarshShinde0"><i class="fab fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://scholar.google.com/citations?user=70E2Rp0AAAAJ&hl=en"><i class="fas fa-fw fa-graduation-cap"></i> Google Scholar</a></li>
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Radar Object Detector Using Arduino">
+    <meta itemprop="description" content="Learn how to build an interactive, desktop sweep radar system by combining an Arduino, an ultrasonic sensor, and a real-time GUI visualizer built with Processing 4.">
+    <meta itemprop="datePublished" content="September 10, 2023">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Radar Object Detector Using Arduino
+</h1>
+          
+        
+        
+        
+        
+             
+
+    
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <h3 id="introduction">Introduction</h3>
+
+<p>Have you ever wanted to build your own radar system that sweeps across the room, detects obstacles, and renders them onto a glowing neon-green desktop interface just like in the movies?</p>
+
+<p><img src="https://user-images.githubusercontent.com/76707560/164144474-7c419780-80e2-403f-85fe-23ead4b12d69.jpg" alt="Radar Object Detector Setup" /></p>
+
+<p>This project does exactly that! By combining an <strong>Arduino microcontroller</strong>, an <strong>HC-SR04 Ultrasonic Sensor</strong>, a <strong>Servo Motor</strong>, and the <strong>Processing 4 IDE</strong> for UI rendering, we can build a fully functional, real-time radar mapping system. The servo sweeps the ultrasonic sensor 180 degrees, measuring obstacle proximity at every angle step. The data is instantly streamed over serial communication to a custom Processing application, rendering a beautiful visual radar scope that paints obstacles in bright red.</p>
+
+<hr />
+
+<h3 id="quick-links--resources">Quick Links &amp; Resources</h3>
+
+<p><a href="https://github.com/HarshShinde0/Radar-Object-Detector-Using-Arduino"><img src="https://img.shields.io/badge/GitHub-Repository-black.svg?logo=github&amp;logoColor=white" alt="GitHub" /></a>
+<a href="https://youtu.be/_erk1Alnt9U?si=5kxNsd86nIIfkwVM"><img src="https://img.shields.io/badge/YouTube-Video%20Demo-red.svg?logo=youtube&amp;logoColor=white" alt="YouTube Video" /></a></p>
+
+<hr />
+
+<h3 id="how-it-works-the-a-z-pipeline">How It Works: The A-Z Pipeline</h3>
+
+<p>The system is split into two halves: the physical hardware (sensing the environment) and the desktop visualizer (rendering the graphics).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[ Ultrasonic Sensor + Servo ] -&gt; (Measures Distance per Angle)
+                                       |
+                                       v
+                             [ Arduino Microcontroller ] -&gt; (Formats Serial Data: "angle,distance.")
+                                       |
+                                       v
+                              [ Processing 4 App ] -&gt; (Draws sweeping Radar UI &amp; highlights red objects)
+</code></pre></div></div>
+
+<ol>
+  <li><strong>The Physical Sweep</strong>: The Arduino rotates a micro servo motor step-by-step from <strong>15° to 165°</strong>, and then sweeps back. Mounted on top of this servo is the ultrasonic sensor.</li>
+  <li><strong>Eco-location Proximity</strong>: At each step, the ultrasonic sensor fires a short sound pulse. By measuring the flight time (in microseconds) until the echo bounces back, the Arduino calculates the exact distance to any obstacle.</li>
+  <li><strong>Serial Communication</strong>: The Arduino sends the current angle and measured distance over a USB Serial link formatted as a simple string: <code class="language-plaintext highlighter-rouge">angle,distance.</code>.</li>
+  <li><strong>Desktop Graphic Sweep</strong>: The Processing 4 application runs on your computer, listening on the same COM port. It parses the incoming strings, calculates the trigonometric coordinates in real-time, and draws a beautiful, glowing radar sweep lines, marking obstacles in red.</li>
+</ol>
+
+<hr />
+
+<h3 id="hardware-connection--circuitry">Hardware Connection &amp; Circuitry</h3>
+
+<p>Setting up the circuit is straightforward. Below is the pin mapping:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Component</th>
+      <th style="text-align: center">Arduino Pin</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><strong>Ultrasonic Trig</strong></td>
+      <td style="text-align: center">Pin 10</td>
+      <td style="text-align: left">Triggers the sound pulse</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Ultrasonic Echo</strong></td>
+      <td style="text-align: center">Pin 11</td>
+      <td style="text-align: left">Measures duration of echo return</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Servo PWM Signal</strong></td>
+      <td style="text-align: center">Pin 12</td>
+      <td style="text-align: left">Drives the physical rotation angle</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>VCC &amp; GND</strong></td>
+      <td style="text-align: center">5V &amp; GND</td>
+      <td style="text-align: left">Power lines for the sensor and servo</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="arduino-microcontroller-code">Arduino Microcontroller Code</h3>
+
+<p>The Arduino program controls the hardware loop. It handles the physical sweep of the servo motor and computes the ultrasonic distance measurements, printing them onto the Serial port for Processing to read.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Includes the Servo library</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Servo.h&gt;</span><span class="cp">
+</span>
+<span class="c1">// Defines Trig and Echo pins of the Ultrasonic Sensor</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">trigPin</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">echoPin</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+
+<span class="c1">// Variables for the duration and the distance</span>
+<span class="kt">long</span> <span class="n">duration</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">distance</span><span class="p">;</span>
+
+<span class="n">Servo</span> <span class="n">myServo</span><span class="p">;</span> <span class="c1">// Creates a servo object for controlling the servo motor</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">trigPin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span> <span class="c1">// Sets the trigPin as an Output</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">echoPin</span><span class="p">,</span> <span class="n">INPUT</span><span class="p">);</span>  <span class="c1">// Sets the echoPin as an Input</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+  <span class="n">myServo</span><span class="p">.</span><span class="n">attach</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>       <span class="c1">// Defines on which pin the servo motor is attached</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Rotates the servo motor from 15 to 165 degrees</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">165</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>  
+    <span class="n">myServo</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+    <span class="n">distance</span> <span class="o">=</span> <span class="n">calculateDistance</span><span class="p">();</span> <span class="c1">// Calculates the distance measured by the sensor</span>
+    
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>        <span class="c1">// Sends the current degree into the Serial Port</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">","</span><span class="p">);</span>      <span class="c1">// Separator character needed by Processing IDE for indexing</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">distance</span><span class="p">);</span> <span class="c1">// Sends the distance value into the Serial Port</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"."</span><span class="p">);</span>      <span class="c1">// Terminating character needed by Processing IDE for parsing</span>
+  <span class="p">}</span>
+  
+  <span class="c1">// Repeats the previous lines in reverse (from 165 back to 15 degrees)</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">165</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>  
+    <span class="n">myServo</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+    <span class="n">distance</span> <span class="o">=</span> <span class="n">calculateDistance</span><span class="p">();</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">","</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">distance</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"."</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Function for calculating the distance measured by the Ultrasonic sensor</span>
+<span class="kt">int</span> <span class="n">calculateDistance</span><span class="p">()</span> <span class="p">{</span> 
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">trigPin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span> 
+  <span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+  
+  <span class="c1">// Sets the trigPin on HIGH state for 10 microseconds to fire a pulse</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">trigPin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span> 
+  <span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">trigPin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+  
+  <span class="n">duration</span> <span class="o">=</span> <span class="n">pulseIn</span><span class="p">(</span><span class="n">echoPin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span> <span class="c1">// Reads echoPin flight time in microseconds</span>
+  <span class="n">distance</span> <span class="o">=</span> <span class="n">duration</span> <span class="o">*</span> <span class="mf">0.034</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>    <span class="c1">// Speed of sound calculation (divided by 2 for round-trip)</span>
+  <span class="k">return</span> <span class="n">distance</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="processing-4-visualizer-gui-code">Processing 4 Visualizer GUI Code</h3>
+
+<p>Processing is a flexible software sketchbook and environment designed to write graphical interfaces. This code reads the incoming serial data streams over the COM port and handles all coordinate transformations (<code class="language-plaintext highlighter-rouge">sin</code> and <code class="language-plaintext highlighter-rouge">cos</code> projections) to draw the sweeping radar arcs and target pins.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">processing.serial.*</span><span class="o">;</span>      <span class="c1">// imports library for serial communication</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.KeyEvent</span><span class="o">;</span> <span class="c1">// imports library for reading the data from the serial port</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+
+<span class="nc">Serial</span> <span class="n">myPort</span><span class="o">;</span> <span class="c1">// defines Object Serial</span>
+
+<span class="c1">// Coordinate and data variables</span>
+<span class="nc">String</span> <span class="n">angle</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">distance</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">data</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">noObject</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">pixsDistance</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">iAngle</span><span class="o">,</span> <span class="n">iDistance</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">index1</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">index2</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="nc">PFont</span> <span class="n">orcFont</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">1200</span><span class="o">,</span> <span class="mi">700</span><span class="o">);</span> <span class="c1">// Set your screen resolution</span>
+  <span class="n">smooth</span><span class="o">();</span>
+  
+  <span class="c1">// Starts the serial communication.</span>
+  <span class="c1">// Note: Adjust "COM5" below to match the serial port your Arduino is connected to</span>
+  <span class="n">myPort</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Serial</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="s">"COM5"</span><span class="o">,</span> <span class="mi">9600</span><span class="o">);</span> 
+  <span class="n">myPort</span><span class="o">.</span><span class="na">bufferUntil</span><span class="o">(</span><span class="sc">'.'</span><span class="o">);</span> <span class="c1">// reads data up to the terminating '.' character</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">98</span><span class="o">,</span> <span class="mi">245</span><span class="o">,</span> <span class="mi">31</span><span class="o">);</span>
+  <span class="c1">// Simulating motion blur and slow fade of the sweeping radar line</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span> 
+  <span class="n">rect</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">width</span><span class="o">,</span> <span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.065</span><span class="o">);</span> 
+  
+  <span class="n">fill</span><span class="o">(</span><span class="mi">98</span><span class="o">,</span> <span class="mi">245</span><span class="o">,</span> <span class="mi">31</span><span class="o">);</span> <span class="c1">// Glowing green color</span>
+  <span class="c1">// Calls the functions to render the UI components</span>
+  <span class="n">drawRadar</span><span class="o">();</span> 
+  <span class="n">drawLine</span><span class="o">();</span>
+  <span class="n">drawObject</span><span class="o">();</span>
+  <span class="n">drawText</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="c1">// Event triggered when new serial data is buffered</span>
+<span class="kt">void</span> <span class="nf">serialEvent</span> <span class="o">(</span><span class="nc">Serial</span> <span class="n">myPort</span><span class="o">)</span> <span class="o">{</span> 
+  <span class="c1">// Reads incoming string until the dot '.' character</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="n">myPort</span><span class="o">.</span><span class="na">readStringUntil</span><span class="o">(</span><span class="sc">'.'</span><span class="o">);</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">data</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+  
+  <span class="n">index1</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">","</span><span class="o">);</span>              <span class="c1">// Find the comma separator</span>
+  <span class="n">angle</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">index1</span><span class="o">);</span>       <span class="c1">// Extract angle degrees</span>
+  <span class="n">distance</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">index1</span> <span class="o">+</span> <span class="mi">1</span><span class="o">,</span> <span class="n">data</span><span class="o">.</span><span class="na">length</span><span class="o">());</span> <span class="c1">// Extract distance in cm</span>
+  
+  <span class="c1">// Convert text variables into numeric integers</span>
+  <span class="n">iAngle</span> <span class="o">=</span> <span class="kt">int</span><span class="o">(</span><span class="n">angle</span><span class="o">);</span>
+  <span class="n">iDistance</span> <span class="o">=</span> <span class="kt">int</span><span class="o">(</span><span class="n">distance</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="c1">// Renders the background radar grid and range arcs</span>
+<span class="kt">void</span> <span class="nf">drawRadar</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">pushMatrix</span><span class="o">();</span>
+  <span class="n">translate</span><span class="o">(</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">,</span> <span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.074</span><span class="o">);</span> <span class="c1">// Shift coordinates to radar hub</span>
+  <span class="n">noFill</span><span class="o">();</span>
+  <span class="n">strokeWeight</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+  <span class="n">stroke</span><span class="o">(</span><span class="mi">98</span><span class="o">,</span> <span class="mi">245</span><span class="o">,</span> <span class="mi">31</span><span class="o">);</span>
+  
+  <span class="c1">// Draw the range concentric arcs</span>
+  <span class="n">arc</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.0625</span><span class="o">),</span> <span class="o">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.0625</span><span class="o">),</span> <span class="no">PI</span><span class="o">,</span> <span class="no">TWO_PI</span><span class="o">);</span>
+  <span class="n">arc</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.27</span><span class="o">),</span> <span class="o">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.27</span><span class="o">),</span> <span class="no">PI</span><span class="o">,</span> <span class="no">TWO_PI</span><span class="o">);</span>
+  <span class="n">arc</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.479</span><span class="o">),</span> <span class="o">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.479</span><span class="o">),</span> <span class="no">PI</span><span class="o">,</span> <span class="no">TWO_PI</span><span class="o">);</span>
+  <span class="n">arc</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.687</span><span class="o">),</span> <span class="o">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.687</span><span class="o">),</span> <span class="no">PI</span><span class="o">,</span> <span class="no">TWO_PI</span><span class="o">);</span>
+  
+  <span class="c1">// Draw the angle radial dividers</span>
+  <span class="n">line</span><span class="o">(-</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">(-</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">30</span><span class="o">)),</span> <span class="o">(-</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">*</span> <span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">30</span><span class="o">)));</span>
+  <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">(-</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">60</span><span class="o">)),</span> <span class="o">(-</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">*</span> <span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">60</span><span class="o">)));</span>
+  <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">(-</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">90</span><span class="o">)),</span> <span class="o">(-</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">*</span> <span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">90</span><span class="o">)));</span>
+  <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">(-</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">120</span><span class="o">)),</span> <span class="o">(-</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">*</span> <span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">120</span><span class="o">)));</span>
+  <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">(-</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">150</span><span class="o">)),</span> <span class="o">(-</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">*</span> <span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">150</span><span class="o">)));</span>
+  <span class="n">line</span><span class="o">((-</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">30</span><span class="o">)),</span> <span class="mi">0</span><span class="o">,</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">popMatrix</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="c1">// Renders red indicator dots when obstacles are detected</span>
+<span class="kt">void</span> <span class="nf">drawObject</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">pushMatrix</span><span class="o">();</span>
+  <span class="n">translate</span><span class="o">(</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">,</span> <span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.074</span><span class="o">);</span> 
+  <span class="n">strokeWeight</span><span class="o">(</span><span class="mi">9</span><span class="o">);</span>
+  <span class="n">stroke</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span> <span class="c1">// Neon red indicator</span>
+  <span class="n">pixsDistance</span> <span class="o">=</span> <span class="n">iDistance</span> <span class="o">*</span> <span class="o">((</span><span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.1666</span><span class="o">)</span> <span class="o">*</span> <span class="mf">0.025</span><span class="o">);</span> <span class="c1">// Map cm to pixel dimensions</span>
+  
+  <span class="c1">// Limit active detection sweep to a 40cm range</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">iDistance</span> <span class="o">&lt;</span> <span class="mi">40</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// Trigonometric line draw projecting the detected object</span>
+    <span class="n">line</span><span class="o">(</span><span class="n">pixsDistance</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">iAngle</span><span class="o">)),</span> <span class="o">-</span><span class="n">pixsDistance</span> <span class="o">*</span> <span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">iAngle</span><span class="o">)),</span> <span class="o">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.505</span><span class="o">)</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">iAngle</span><span class="o">)),</span> <span class="o">-(</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.505</span><span class="o">)</span> <span class="o">*</span> <span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">iAngle</span><span class="o">)));</span>
+  <span class="o">}</span>
+  <span class="n">popMatrix</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="c1">// Renders the main sweeping green line</span>
+<span class="kt">void</span> <span class="nf">drawLine</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">pushMatrix</span><span class="o">();</span>
+  <span class="n">strokeWeight</span><span class="o">(</span><span class="mi">9</span><span class="o">);</span>
+  <span class="n">stroke</span><span class="o">(</span><span class="mi">30</span><span class="o">,</span> <span class="mi">250</span><span class="o">,</span> <span class="mi">60</span><span class="o">);</span>
+  <span class="n">translate</span><span class="o">(</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">,</span> <span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.074</span><span class="o">);</span> 
+  <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">(</span><span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.12</span><span class="o">)</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">iAngle</span><span class="o">)),</span> <span class="o">-(</span><span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.12</span><span class="o">)</span> <span class="o">*</span> <span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">iAngle</span><span class="o">)));</span> 
+  <span class="n">popMatrix</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="c1">// Renders the textual telemetry and radar headers</span>
+<span class="kt">void</span> <span class="nf">drawText</span><span class="o">()</span> <span class="o">{</span> 
+  <span class="n">pushMatrix</span><span class="o">();</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">iDistance</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">noObject</span> <span class="o">=</span> <span class="s">"Out of Range"</span><span class="o">;</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="n">noObject</span> <span class="o">=</span> <span class="s">"In Range"</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="n">fill</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">rect</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.0648</span><span class="o">,</span> <span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">);</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">98</span><span class="o">,</span> <span class="mi">245</span><span class="o">,</span> <span class="mi">31</span><span class="o">);</span>
+  <span class="n">textSize</span><span class="o">(</span><span class="mi">25</span><span class="o">);</span>
+  
+  <span class="c1">// Range indicators</span>
+  <span class="n">text</span><span class="o">(</span><span class="s">"10cm"</span><span class="o">,</span> <span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.3854</span><span class="o">,</span> <span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.0833</span><span class="o">);</span>
+  <span class="n">text</span><span class="o">(</span><span class="s">"20cm"</span><span class="o">,</span> <span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.281</span><span class="o">,</span> <span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.0833</span><span class="o">);</span>
+  <span class="n">text</span><span class="o">(</span><span class="s">"30cm"</span><span class="o">,</span> <span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.177</span><span class="o">,</span> <span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.0833</span><span class="o">);</span>
+  <span class="n">text</span><span class="o">(</span><span class="s">"40cm"</span><span class="o">,</span> <span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.0729</span><span class="o">,</span> <span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.0833</span><span class="o">);</span>
+  
+  <span class="c1">// Telemetry indicators</span>
+  <span class="n">textSize</span><span class="o">(</span><span class="mi">40</span><span class="o">);</span>
+  <span class="n">text</span><span class="o">(</span><span class="s">"TEAM HKS"</span><span class="o">,</span> <span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.875</span><span class="o">,</span> <span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.0277</span><span class="o">);</span>
+  <span class="n">text</span><span class="o">(</span><span class="s">"Angle: "</span> <span class="o">+</span> <span class="n">iAngle</span> <span class="o">+</span> <span class="s">" °"</span><span class="o">,</span> <span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.48</span><span class="o">,</span> <span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.0277</span><span class="o">);</span>
+  <span class="n">text</span><span class="o">(</span><span class="s">"Distance: "</span><span class="o">,</span> <span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.26</span><span class="o">,</span> <span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.0277</span><span class="o">);</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">iDistance</span> <span class="o">&lt;</span> <span class="mi">40</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">text</span><span class="o">(</span><span class="s">"        "</span> <span class="o">+</span> <span class="n">iDistance</span> <span class="o">+</span> <span class="s">" cm"</span><span class="o">,</span> <span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.225</span><span class="o">,</span> <span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.0277</span><span class="o">);</span>
+  <span class="o">}</span>
+  
+  <span class="c1">// Grid Angle markings</span>
+  <span class="n">textSize</span><span class="o">(</span><span class="mi">25</span><span class="o">);</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">98</span><span class="o">,</span> <span class="mi">245</span><span class="o">,</span> <span class="mi">60</span><span class="o">);</span>
+  <span class="n">translate</span><span class="o">((</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.4994</span><span class="o">)</span> <span class="o">+</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">30</span><span class="o">)),</span> <span class="o">(</span><span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.0907</span><span class="o">)</span> <span class="o">-</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">30</span><span class="o">)));</span>
+  <span class="n">rotate</span><span class="o">(-</span><span class="n">radians</span><span class="o">(-</span><span class="mi">60</span><span class="o">));</span>
+  <span class="n">text</span><span class="o">(</span><span class="s">"30°"</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">resetMatrix</span><span class="o">();</span>
+  
+  <span class="n">translate</span><span class="o">((</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.503</span><span class="o">)</span> <span class="o">+</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">60</span><span class="o">)),</span> <span class="o">(</span><span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.0888</span><span class="o">)</span> <span class="o">-</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">60</span><span class="o">)));</span>
+  <span class="n">rotate</span><span class="o">(-</span><span class="n">radians</span><span class="o">(-</span><span class="mi">30</span><span class="o">));</span>
+  <span class="n">text</span><span class="o">(</span><span class="s">"60°"</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">resetMatrix</span><span class="o">();</span>
+  
+  <span class="n">translate</span><span class="o">((</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.507</span><span class="o">)</span> <span class="o">+</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">90</span><span class="o">)),</span> <span class="o">(</span><span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.0833</span><span class="o">)</span> <span class="o">-</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">90</span><span class="o">)));</span>
+  <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">0</span><span class="o">));</span>
+  <span class="n">text</span><span class="o">(</span><span class="s">"90°"</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">resetMatrix</span><span class="o">();</span>
+  
+  <span class="n">translate</span><span class="o">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.513</span> <span class="o">+</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">120</span><span class="o">)),</span> <span class="o">(</span><span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.07129</span><span class="o">)</span> <span class="o">-</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">120</span><span class="o">)));</span>
+  <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(-</span><span class="mi">30</span><span class="o">));</span>
+  <span class="n">text</span><span class="o">(</span><span class="s">"120°"</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">resetMatrix</span><span class="o">();</span>
+  
+  <span class="n">translate</span><span class="o">((</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.5104</span><span class="o">)</span> <span class="o">+</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">150</span><span class="o">)),</span> <span class="o">(</span><span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.0574</span><span class="o">)</span> <span class="o">-</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="mi">150</span><span class="o">)));</span>
+  <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(-</span><span class="mi">60</span><span class="o">));</span>
+  <span class="n">text</span><span class="o">(</span><span class="s">"150°"</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">popMatrix</span><span class="o">();</span> 
+<span class="o">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="running-the-project">Running the Project</h3>
+
+<p>To experience your new desktop radar in action, follow these simple setup steps:</p>
+
+<ol>
+  <li><strong>Upload the Arduino Sketch</strong>:
+    <ul>
+      <li>Connect your Arduino Uno to your PC using a USB cable.</li>
+      <li>Paste the <strong>Arduino Microcontroller Code</strong> into your Arduino IDE, verify it, and upload it to the board.</li>
+    </ul>
+  </li>
+  <li><strong>Verify your COM Port</strong>:
+    <ul>
+      <li>Under <code class="language-plaintext highlighter-rouge">Tools -&gt; Port</code>, verify the name of the active port (e.g., <code class="language-plaintext highlighter-rouge">COM5</code> on Windows, or <code class="language-plaintext highlighter-rouge">/dev/ttyUSB0</code> on Linux).</li>
+    </ul>
+  </li>
+  <li><strong>Execute Processing Sketch</strong>:
+    <ul>
+      <li>Open the <strong>Processing 4 IDE</strong> on your computer.</li>
+      <li>Paste the <strong>Processing 4 Visualizer GUI Code</strong> into a new sketch.</li>
+      <li>Modify the line: <code class="language-plaintext highlighter-rouge">myPort = new Serial(this, "COM5", 9600);</code> to match your verified port (e.g., replace <code class="language-plaintext highlighter-rouge">"COM5"</code> with your specific port number).</li>
+      <li>Press <strong>Run</strong> (the play icon) and watch the sweeping glowing radar map objects in real-time!</li>
+    </ul>
+  </li>
+</ol>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/tags/#arduino" class="page__taxonomy-item" rel="tag">Arduino</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#embedded-systems" class="page__taxonomy-item" rel="tag">Embedded Systems</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#hardware" class="page__taxonomy-item" rel="tag">Hardware</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#processing" class="page__taxonomy-item" rel="tag">Processing</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#sensors" class="page__taxonomy-item" rel="tag">Sensors</a>
+    
+    </span>
+  </p>
+
+
+
+
+      </footer>
+
+      <!-- Social sharing disabled -->
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="http://localhost:4000/git/" class="pagination--pager" title="An Intro to Git and GitHub
+">Previous</a>
+    
+    
+      <a href="http://localhost:4000/tensorflow/" class="pagination--pager" title="Install TensorFlow GPU on WSL2/Ubuntu 24.04 (Windows 10/11) - CUDA, cuDNN, TensorRT &amp; PyTorch - GPU
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Google_Summer_of_Code_sun_logo_2022.svg/1280px-Google_Summer_of_Code_sun_logo_2022.svg.png"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/gsoc/" rel="permalink">Google Summer of Code: AI-ready Dataset Metadata as a Service
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://www.proxpc.com/media/uploads/2024/07/10/introduction-to-pytorch-and-tensorflow.png"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/tensorflow/" rel="permalink">Install TensorFlow GPU on WSL2/Ubuntu 24.04 (Windows 10/11) - CUDA, cuDNN, TensorRT &amp; PyTorch - GPU
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://user-images.githubusercontent.com/87325345/199505243-848a53d1-b9dc-40e0-9dd9-a369b0d4ad59.jpg"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/git/" rel="permalink">An Intro to Git and GitHub
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://cdn.hashnode.com/res/hashnode/image/upload/v1690391762062/5084f275-6bfe-4596-bdcb-cda894013137.jpeg?auto=compress,format&format=webp"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/arduino/" rel="permalink">Distance Measurement using Ultrasonic Sensor and Arduino
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<a href="/sitemap/">Sitemap</a>
+<!-- end custom footer snippets -->
+
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/HarshShinde0"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Harsh Shinde. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

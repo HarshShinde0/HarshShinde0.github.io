@@ -1,0 +1,700 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Distance Measurement using Ultrasonic Sensor and Arduino - Harsh Shinde</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Harsh Shinde">
+<meta property="og:title" content="Distance Measurement using Ultrasonic Sensor and Arduino">
+
+
+  <link rel="canonical" href="http://localhost:4000/arduino/">
+  <meta property="og:url" content="http://localhost:4000/arduino/">
+
+
+
+  <meta property="og:description" content="Learn how to build a real-time distance measurement device using an ultrasonic sensor, Arduino Uno, and a 16x2 LCD display, complete with wiring layouts and code.">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2022-01-24T00:00:00+05:30">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Harsh Shinde",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Harsh Shinde Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="http://localhost:4000/images/apple-touch-icon-57x57.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="60x60" href="http://localhost:4000/images/apple-touch-icon-60x60.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="76x76" href="http://localhost:4000/images/apple-touch-icon-76x76.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="120x120" href="http://localhost:4000/images/apple-touch-icon-120x120.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="152x152" href="http://localhost:4000/images/apple-touch-icon-152x152.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/images/apple-touch-icon-180x180.png?v=M44lzPylqQ">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-32x32.png?v=M44lzPylqQ" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/android-chrome-192x192.png?v=M44lzPylqQ" sizes="192x192">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-96x96.png?v=M44lzPylqQ" sizes="96x96">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-16x16.png?v=M44lzPylqQ" sizes="16x16">
+<link rel="manifest" href="http://localhost:4000/images/manifest.json?v=M44lzPylqQ">
+<link rel="mask-icon" href="http://localhost:4000/images/safari-pinned-tab.svg?v=M44lzPylqQ" color="#000000">
+<link rel="shortcut icon" href="/images/favicon.ico?v=M44lzPylqQ">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="http://localhost:4000/images/mstile-144x144.png?v=M44lzPylqQ">
+<meta name="msapplication-config" content="http://localhost:4000/images/browserconfig.xml?v=M44lzPylqQ">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/academicons.css"/>
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/">Harsh Shinde</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/portfolio/">Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Blogs</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/files/HarshResume.pdf">Resume</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="http://localhost:4000/images/profile.png" class="author__avatar" alt="Harsh Shinde">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Harsh Shinde</h3>
+    <p class="author__bio">Machine Learning & Geo-AI</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> India</li>
+      
+      
+      
+      
+        <li><a href="mailto:harshinde.hks@gmail.com"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+      
+      
+       
+      
+        <li><a href="https://twitter.com/harshinde_hks"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+      
+      
+        <li><a href="https://www.linkedin.com/in/harshshinde"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/HarshShinde0"><i class="fab fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://scholar.google.com/citations?user=70E2Rp0AAAAJ&hl=en"><i class="fas fa-fw fa-graduation-cap"></i> Google Scholar</a></li>
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Distance Measurement using Ultrasonic Sensor and Arduino">
+    <meta itemprop="description" content="Learn how to build a real-time distance measurement device using an ultrasonic sensor, Arduino Uno, and a 16x2 LCD display, complete with wiring layouts and code.">
+    <meta itemprop="datePublished" content="January 24, 2022">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Distance Measurement using Ultrasonic Sensor and Arduino
+</h1>
+          
+        
+        
+        
+        
+             
+
+    
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>Interfacing dynamic sensors with microcontrollers is one of the most exciting ways to learn embedded systems and physical computing. This guide explains how to build a real-time <strong>distance measurement device</strong> using an <strong>Arduino Uno</strong>, an <strong>HC-SR04 Ultrasonic Sensor</strong>, and a <strong>16x2 LCD display</strong>.</p>
+
+<hr />
+
+<h3 id="components-overview">Components Overview</h3>
+
+<h4 id="1-arduino-uno">1. Arduino Uno</h4>
+<p>Arduino is an open-source electronics platform that encompasses both hardware and software components. At its core, Arduino boards feature microcontrollers, such as the popular Atmel AVR family, with built-in input/output pins for interacting with external components. The Arduino Integrated Development Environment (IDE) provides a user-friendly interface to write, compile, and upload code to the board, simplifying programming with its C/C++ language support.</p>
+
+<p><img src="https://cdn.sparkfun.com/assets/9/1/e/4/8/515b4656ce395f8a38000000.png" alt="Arduino Uno board" /></p>
+
+<h4 id="2-hc-sr04-ultrasonic-sensor">2. HC-SR04 Ultrasonic Sensor</h4>
+<p>An ultrasonic sensor is a device that uses sound waves at frequencies higher than the human audible range to measure distances and detect objects without physical contact. It works based on the principle of sending ultrasonic pulses and measuring the time it takes for the sound waves to bounce back after hitting an obstacle.</p>
+
+<p><img src="https://robu.in/wp-content/uploads/2014/08/download.jpg" alt="Ultrasonic Sensor" /></p>
+
+<hr />
+
+<h3 id="how-an-ultrasonic-sensor-works">How an Ultrasonic Sensor Works</h3>
+<p>An ultrasonic sensor works by emitting high-frequency sound waves (ultrasonic pulses) and measuring the time it takes for the waves to bounce back after hitting an object. The sensor then calculates the distance to the object based on the time of flight of the sound waves. This distance measurement technique allows the sensor to detect objects or measure distances without any physical contact, making it useful in various applications such as distance sensing, object detection, and collision avoidance.</p>
+
+<p><img src="https://static.packt-cdn.com/products/9781838982461/graphics/assets/04fb297a-ba3e-4828-bef7-85587791b615.png" alt="Working of Ultrasonic Sensor" /></p>
+
+<h4 id="the-physics--formulas">The Physics &amp; Formulas</h4>
+<p>The speed of sound in air is approximately <strong>344 m/s</strong>.</p>
+
+<ul>
+  <li><strong>Basic Formula:</strong>
+\(\text{Distance} = \text{Speed} \times \text{Time}\)</li>
+</ul>
+
+<p>In the Arduino code, the <code class="language-plaintext highlighter-rouge">duration</code> variable stores the total round-trip time taken by the sound wave traveling from the emitter, bouncing off the object, and returning to the receiver. This is double the time needed to reach the target. Therefore, the time taken to reach the object is exactly half of the total measured time.</p>
+
+<ul>
+  <li><strong>Applied Formula:</strong>
+\(\text{Distance} = \text{Speed of Sound in Air} \times \left( \frac{\text{Time Taken}}{2} \right)\)</li>
+</ul>
+
+<hr />
+
+<h4 id="3-16x2-lcd-display">3. 16x2 LCD Display</h4>
+<p>A 16x2 LCD (16 characters by 2 lines) is a popular alphanumeric display module used in a wide range of electronic applications. It consists of 16 columns and 2 rows of character spaces, allowing it to display up to 16 characters per line for a total of 32 characters.</p>
+
+<p><img src="https://lastminuteengineers.com/wp-content/uploads/featuredimages/Arduino-Tutorial-for-Interfacing-I2C-LCD.webp" alt="16x2 LCD Display" /></p>
+
+<h4 id="4-breadboard">4. Breadboard</h4>
+<p>A breadboard allows electronics enthusiasts, hobbyists, and engineers to build and test circuits quickly without soldering. It consists of a grid of interconnected holes that allow components and wires to be inserted easily. A “breadboard short” refers to an unintended electrical connection (short circuit) between two or more points on a breadboard, which should be avoided during wiring.</p>
+
+<p><img src="https://cdn.sparkfun.com/assets/learn_tutorials/4/7/12615-02_Full_Size_Breadboard_Split_Power_Rails.jpg" alt="Breadboard" /></p>
+
+<hr />
+
+<h3 id="circuit-connection-diagram">Circuit Connection Diagram</h3>
+
+<p><img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1690391762062/5084f275-6bfe-4596-bdcb-cda894013137.jpeg?auto=compress,format&amp;format=webp" alt="Circuit Diagram" /></p>
+
+<h4 id="setup-steps">Setup Steps</h4>
+<ol>
+  <li>Connect the <strong>Echo</strong> pin of the sensor to pin <strong>6</strong> of the Arduino.</li>
+  <li>Connect the <strong>Trigger</strong> pin of the sensor to pin <strong>7</strong> of the Arduino.</li>
+  <li>Wire the 16x2 LCD display: Associate <code class="language-plaintext highlighter-rouge">rs</code> to <strong>12</strong>, <code class="language-plaintext highlighter-rouge">en</code> to <strong>11</strong>, <code class="language-plaintext highlighter-rouge">d4</code> to <strong>5</strong>, <code class="language-plaintext highlighter-rouge">d5</code> to <strong>4</strong>, <code class="language-plaintext highlighter-rouge">d6</code> to <strong>3</strong>, and <code class="language-plaintext highlighter-rouge">d7</code> to <strong>2</strong>.</li>
+  <li>Open the Arduino IDE, navigate to <code class="language-plaintext highlighter-rouge">Tools</code>, and select your correct Board and Port.</li>
+  <li>Verify, compile, and upload the sketch to the Arduino Uno board.</li>
+  <li>Monitor the output in the Serial Monitor or view the distance directly on the LCD display.</li>
+</ol>
+
+<hr />
+
+<h3 id="arduino-sketch-source-code">Arduino Sketch Source Code</h3>
+<p>Here is the complete Arduino sketch:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;LiquidCrystal.h&gt;</span><span class="cp">
+</span>
+<span class="c1">// Initialize the library by associating the LCD interface pins</span>
+<span class="c1">// with the Arduino pin numbers they are connected to</span>
+<span class="kt">long</span> <span class="n">duration</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">distanceCM</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">distanceInch</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">rs</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">en</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span> <span class="n">d4</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">d5</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">d6</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">d7</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">LiquidCrystal</span> <span class="nf">lcd</span><span class="p">(</span><span class="n">rs</span><span class="p">,</span> <span class="n">en</span><span class="p">,</span> <span class="n">d4</span><span class="p">,</span> <span class="n">d5</span><span class="p">,</span> <span class="n">d6</span><span class="p">,</span> <span class="n">d7</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Set up the LCD's columns and rows:</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span> <span class="c1">// Trig Pin</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">INPUT</span><span class="p">);</span>  <span class="c1">// Echo Pin</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">120</span><span class="p">);</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+  
+  <span class="c1">// Trigger the ultrasonic sensor by sending a 10us HIGH pulse</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+  <span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+  <span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+  
+  <span class="c1">// Read the bounce duration in microseconds</span>
+  <span class="n">duration</span> <span class="o">=</span> <span class="n">pulseIn</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+  
+  <span class="c1">// Calculate distance in cm and inches</span>
+  <span class="n">distanceCM</span> <span class="o">=</span> <span class="p">(</span><span class="n">duration</span> <span class="o">*</span> <span class="mf">0.034</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">distanceInch</span> <span class="o">=</span> <span class="p">(</span><span class="n">duration</span> <span class="o">*</span> <span class="mf">0.0133</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+  
+  <span class="c1">// Display distance in centimeters on Row 1</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">setCursor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Distance: "</span><span class="p">);</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">distanceCM</span><span class="p">);</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" Cm"</span><span class="p">);</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+  
+  <span class="c1">// Display distance in inches on Row 2</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">setCursor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Distance: "</span><span class="p">);</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">distanceInch</span><span class="p">);</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" In</span><span class="se">\"</span><span class="s">"</span><span class="p">);</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="conclusion">Conclusion</h3>
+<p>The ultrasonic sensor is a versatile component in DIY electronics projects, offering non-contact distance measurement and position sensing for robotics, home automation, and smart security. With an Arduino Uno, it is straightforward to capture, convert, and output sensor readings on a dynamic display.</p>
+
+<blockquote>
+  <p>[!NOTE]
+All code, wiring blueprints, and related project files are hosted on GitHub. Go ahead and start building!</p>
+</blockquote>
+
+<hr />
+
+<h3 id="contact-info--links">Contact Info &amp; Links</h3>
+<ul>
+  <li><strong>Email:</strong> <a href="mailto:harshinde.hks@gmail.com">harshinde.hks@gmail.com</a></li>
+  <li><strong>Portfolio Website:</strong> <a href="https://harshshinde0.github.io/">harshshinde0.github.io</a></li>
+  <li><strong>GitHub Profile:</strong> <a href="https://github.com/HarshShinde0">github.com/HarshShinde0</a></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/tags/#arduino" class="page__taxonomy-item" rel="tag">Arduino</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#embedded-systems" class="page__taxonomy-item" rel="tag">Embedded Systems</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#hardware" class="page__taxonomy-item" rel="tag">Hardware</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#sensors" class="page__taxonomy-item" rel="tag">Sensors</a>
+    
+    </span>
+  </p>
+
+
+
+
+      </footer>
+
+      <!-- Social sharing disabled -->
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">Previous</a>
+    
+    
+      <a href="http://localhost:4000/git/" class="pagination--pager" title="An Intro to Git and GitHub
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Google_Summer_of_Code_sun_logo_2022.svg/1280px-Google_Summer_of_Code_sun_logo_2022.svg.png"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/gsoc/" rel="permalink">Google Summer of Code: AI-ready Dataset Metadata as a Service
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://www.proxpc.com/media/uploads/2024/07/10/introduction-to-pytorch-and-tensorflow.png"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/tensorflow/" rel="permalink">Install TensorFlow GPU on WSL2/Ubuntu 24.04 (Windows 10/11) - CUDA, cuDNN, TensorRT &amp; PyTorch - GPU
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://user-images.githubusercontent.com/76707560/164144474-7c419780-80e2-403f-85fe-23ead4b12d69.jpg"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/arduino-radar/" rel="permalink">Radar Object Detector Using Arduino
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://user-images.githubusercontent.com/87325345/199505243-848a53d1-b9dc-40e0-9dd9-a369b0d4ad59.jpg"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/git/" rel="permalink">An Intro to Git and GitHub
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<a href="/sitemap/">Sitemap</a>
+<!-- end custom footer snippets -->
+
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/HarshShinde0"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Harsh Shinde. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,741 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>An Intro to Git and GitHub - Harsh Shinde</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Harsh Shinde">
+<meta property="og:title" content="An Intro to Git and GitHub">
+
+
+  <link rel="canonical" href="http://localhost:4000/git/">
+  <meta property="og:url" content="http://localhost:4000/git/">
+
+
+
+  <meta property="og:description" content="Learn the fundamentals of Git and GitHub, essential tools for version control and collaborative software development.">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2023-08-15T00:00:00+05:30">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Harsh Shinde",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Harsh Shinde Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="http://localhost:4000/images/apple-touch-icon-57x57.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="60x60" href="http://localhost:4000/images/apple-touch-icon-60x60.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="76x76" href="http://localhost:4000/images/apple-touch-icon-76x76.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="120x120" href="http://localhost:4000/images/apple-touch-icon-120x120.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="152x152" href="http://localhost:4000/images/apple-touch-icon-152x152.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/images/apple-touch-icon-180x180.png?v=M44lzPylqQ">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-32x32.png?v=M44lzPylqQ" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/android-chrome-192x192.png?v=M44lzPylqQ" sizes="192x192">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-96x96.png?v=M44lzPylqQ" sizes="96x96">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-16x16.png?v=M44lzPylqQ" sizes="16x16">
+<link rel="manifest" href="http://localhost:4000/images/manifest.json?v=M44lzPylqQ">
+<link rel="mask-icon" href="http://localhost:4000/images/safari-pinned-tab.svg?v=M44lzPylqQ" color="#000000">
+<link rel="shortcut icon" href="/images/favicon.ico?v=M44lzPylqQ">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="http://localhost:4000/images/mstile-144x144.png?v=M44lzPylqQ">
+<meta name="msapplication-config" content="http://localhost:4000/images/browserconfig.xml?v=M44lzPylqQ">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/academicons.css"/>
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/">Harsh Shinde</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/portfolio/">Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Blogs</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/files/HarshResume.pdf">Resume</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="http://localhost:4000/images/profile.png" class="author__avatar" alt="Harsh Shinde">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Harsh Shinde</h3>
+    <p class="author__bio">Machine Learning & Geo-AI</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> India</li>
+      
+      
+      
+      
+        <li><a href="mailto:harshinde.hks@gmail.com"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+      
+      
+       
+      
+        <li><a href="https://twitter.com/harshinde_hks"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+      
+      
+        <li><a href="https://www.linkedin.com/in/harshshinde"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/HarshShinde0"><i class="fab fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://scholar.google.com/citations?user=70E2Rp0AAAAJ&hl=en"><i class="fas fa-fw fa-graduation-cap"></i> Google Scholar</a></li>
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="An Intro to Git and GitHub">
+    <meta itemprop="description" content="Learn the fundamentals of Git and GitHub, essential tools for version control and collaborative software development.">
+    <meta itemprop="datePublished" content="August 15, 2023">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">An Intro to Git and GitHub
+</h1>
+          
+        
+        
+        
+        
+             
+
+    
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>Git and GitHub have become popular standards in the software development process. Here’s an introduction to how you can utilize both to write code and build applications.</p>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*yoJvXNQOTVBKx3mWMGsuyg.png" alt="Git and GitHub overview" /></p>
+
+<hr />
+
+<h3 id="what-is-git">What Is Git?</h3>
+<p>Git is a free and open source distributed version control system. What is version control? Essentially, it’s a system that allows you to record changes to files over time, thus, you can view specific versions of those files later on.</p>
+
+<hr />
+
+<h3 id="why-use-git">Why Use Git?</h3>
+<p>Over time, Git has become an industry standard for development. Being able to snapshot your code at a specific time is incredibly helpful as your codebase grows and you have to reference previous versions of it.</p>
+
+<hr />
+
+<h3 id="how-it-works">How It Works</h3>
+<p>With Git, you record local changes to your code using a command-line tool, called the “Git Shell” (you can use Git in other command-line tools — I’ll refer to Git Shell through the following sections). Command-line lets you enter commands to view, change, and manage files and folders in a simple terminal, instead of using a graphical user interface (GUI). If you have not used command-line before, don’t worry, once you get started, it is incredibly straightforward.</p>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*Zy9ODtdlufYcFlb5BKHd0w.png" alt="Git workflow diagram" /></p>
+<div style="text-align: center; color: #666; font-size: 0.9em; margin-bottom: 2em;">Basic Git Workflow</div>
+
+<p>Essentially, when using Git, you make changes to your code files as you normally would during the development process. When you have completed a coding milestone, or want to snapshot certain changes, you add the files you changed to a staging area and then commit them to the version history of your project (repository) using Git. Below, you’ll learn about the Git commands you use for those steps.</p>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*1WAfbk9B8I1Oru2zkn7v8A.png" alt="Git staging area visualization" /></p>
+<div style="text-align: center; color: #666; font-size: 0.9em; margin-bottom: 2em;">Git Staging Area</div>
+
+<hr />
+
+<h3 id="terminal-commands">Terminal Commands</h3>
+<p>While using Git on the command line, chances are you will also use some basic terminal commands while going through your project and system files / folders, including:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">pwd</code> — Check where you are in the current file system.</li>
+  <li><code class="language-plaintext highlighter-rouge">ls</code> — List files in the current directory (folder).</li>
+  <li><code class="language-plaintext highlighter-rouge">cd [directory-name]</code> — Moves to the given directory name or path.</li>
+  <li><code class="language-plaintext highlighter-rouge">mkdir [directory-name]</code> — Makes a new directory with the given name.</li>
+</ul>
+
+<hr />
+
+<h3 id="creating-repositories">Creating Repositories</h3>
+<p>When you wish to utilize Git for a project, the first command you must do is <code class="language-plaintext highlighter-rouge">git init</code>, with the name of your project:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init <span class="o">[</span>project-name]
+</code></pre></div></div>
+
+<p>You run this command on the Git Shell command-line in the main directory (folder) of your project, which you can navigate to in the Shell using the commands listed above. Once you run this command, Git creates a hidden <code class="language-plaintext highlighter-rouge">.git</code> file inside the main directory of your project. This file tracks the version history of your project and is what turns the project into a Git repository, enabling you to run Git commands on it.</p>
+
+<hr />
+
+<h3 id="making-changes">Making Changes</h3>
+<ul>
+  <li><strong>Staging changes:</strong> Add files to the staging area:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add <span class="o">[</span>file] <span class="c"># Add a single file</span>
+git add <span class="k">*</span>      <span class="c"># Add all files in the current folder</span>
+</code></pre></div>    </div>
+    <p>Once you make changes to your files and choose to snapshot them to your project’s version history, you have to add them to the staging area with <code class="language-plaintext highlighter-rouge">git add</code>, by file name, or by including all of the files in your current folder using <code class="language-plaintext highlighter-rouge">git add *</code>.</p>
+  </li>
+  <li><strong>Committing changes:</strong> Commit your changes to the version history:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit <span class="nt">-m</span> <span class="s2">"[message]"</span>
+</code></pre></div>    </div>
+    <p>To finally commit the changes you made to your files from the staging area to your repository’s version history, you need to run <code class="language-plaintext highlighter-rouge">git commit</code> with a descriptive message of what changes you made.</p>
+  </li>
+  <li><strong>Checking status:</strong> View the state of your files:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git status
+</code></pre></div>    </div>
+    <p>If at any point, you wish to view a summary of the files you have changed and not yet committed, simply run <code class="language-plaintext highlighter-rouge">git status</code> in your project’s repository on the Git Shell command-line.</p>
+  </li>
+</ul>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*9htEwsYdqPHIboA5Vaf-6w.png" alt="Git workflow detailed diagram" /></p>
+<div style="text-align: center; color: #666; font-size: 0.9em; margin-bottom: 2em;">Detailed Git Workflow</div>
+
+<hr />
+
+<h3 id="working-with-github">Working with GitHub</h3>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*iE43cfR7x2wuH79YwJ3KDw.png" alt="GitHub collaboration" /></p>
+<div style="text-align: center; color: #666; font-size: 0.9em; margin-bottom: 2em;">GitHub Collaboration Flow</div>
+
+<h4 id="overview">Overview</h4>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*TV84y3tN-bFj13alcd0gSg.png" alt="GitHub features overview" /></p>
+
+<p>In essence, GitHub is a service that allows you to host your Git repositories online and collaborate with others on them. You can use GitHub through their web portal as well as the GitHub desktop GUI and the Git Shell.</p>
+
+<p>As a service, GitHub is now used by 12 million developers and organizations, and has become a fairly popular standard for collaborating on projects and open-sourcing code.</p>
+
+<h4 id="how-github-works">How GitHub Works</h4>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*F6xnO9PnASvjVOApQOh9PQ.png" alt="GitHub workflow" /></p>
+
+<p>With GitHub, you have the same local process of adding and committing files to an initialized Git repository on your computer. However, you can utilize GitHub to push your changes to GitHub’s hosting service. This allows other people to similarly work on the same project, pull your changes to their computers, and push their own changes to GitHub.</p>
+
+<h4 id="creating--copying-repositories">Creating &amp; Copying Repositories</h4>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*R6fwDmu_hGs70JS0tkOXCw.png" alt="GitHub fork process" /></p>
+
+<p>With Git on your local computer, if you want to create a new repository, you must run <code class="language-plaintext highlighter-rouge">git init</code>. However, many times you may work on projects that are hosted on GitHub and have already been initialized.</p>
+
+<p>One of the ways to copy a repository to your GitHub account is using <strong>fork</strong>, which is available on GitHub’s website.</p>
+
+<p>To download a copy of a repository from GitHub to your computer:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone <span class="o">[</span>url]
+</code></pre></div></div>
+
+<h4 id="pushing--pulling-changes">Pushing &amp; Pulling Changes</h4>
+<ul>
+  <li><strong>Pushing Changes:</strong> Upload your local commits to your online repository:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push <span class="o">[</span>repo] <span class="o">[</span>branch]
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Pulling Changes:</strong> Update your local repository with the latest changes from online:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git pull
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<blockquote>
+  <p>[!WARNING]
+<strong>Important Note about Merge Conflicts</strong>
+It is important to remember, that while you may have a repository hosted on GitHub, the version history of your local copy can be different than the version history of your repository online.
+If you try to pull or push changes to files that have already been changed by someone else, you can run into a merge conflict. You will need to resolve these conflicts manually.
+For more information, see <a href="https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/">GitHub’s guide on resolving merge conflicts</a>.</p>
+</blockquote>
+
+<hr />
+
+<h3 id="working-with-branches">Working with Branches</h3>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*exCFWgo1cXpgCBmrwFRUUg.png" alt="Git branching visualization" /></p>
+
+<p>When using Git, you have the ability to view the version history of your project’s development. However, sometimes you may choose to develop features, fix bugs, or experiment in ways where you want to separate your main project’s code from another variant.</p>
+
+<p>You can do this with <strong>branches</strong>, which are essentially parallel versions of your repository’s main code— that code is developed on the “master” (or “main”) branch. You can create multiple branches for collaboration and other unique development to your code:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout <span class="nt">-b</span> <span class="o">[</span>new-branch-name]
+</code></pre></div></div>
+
+<blockquote>
+  <p>[!NOTE]
+<strong>Learning More About Branches</strong>
+To learn more about branches and merging changes, check out <a href="https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell">Git’s official documentation on branching</a>.</p>
+</blockquote>
+
+<hr />
+
+<h3 id="getting-started">Getting Started</h3>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*ZiV_FIKzVMxgvPbGOs_pnA.png" alt="Getting started with Git and GitHub" /></p>
+
+<p>To get started with Git and GitHub:</p>
+<ol>
+  <li>Sign up for a GitHub account at <a href="https://github.com">github.com</a>.</li>
+  <li>Download GitHub’s desktop GUI at <a href="https://desktop.github.com">desktop.github.com</a>.</li>
+  <li>Set up your credentials using the GitHub desktop application or Git Shell.</li>
+</ol>
+
+<blockquote>
+  <p>[!TIP]
+<strong>GitHub Student Developer Pack</strong>
+As a student, you can get access to the GitHub Student Developer Pack, which includes benefits from GitHub as well as other partners. Learn more at <a href="https://education.github.com/pack">education.github.com/pack</a>.</p>
+</blockquote>
+
+<blockquote>
+  <p>[!TIP]
+<strong>Microsoft Imagine</strong>
+Microsoft Imagine provides students with professional developer and designer tools at no cost. <a href="https://imagine.microsoft.com/en-us/dashboard">Create an account</a> to get started!</p>
+</blockquote>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*lw5abb-pLlLqfIsjs_Vtgw.png" alt="Additional Git features" />
+<img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*32-41W_WgIfUVymgW1I0Aw.png" alt="Git and GitHub ecosystem" /></p>
+
+<hr />
+
+<h3 id="additional-resources">Additional Resources</h3>
+<ul>
+  <li><a href="https://git-scm.com"><strong>git-scm.com</strong></a> - The main website and documentation for Git.</li>
+  <li><a href="https://help.github.com"><strong>help.github.com</strong></a> - GitHub’s help documentation.</li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/tags/#git" class="page__taxonomy-item" rel="tag">Git</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#github" class="page__taxonomy-item" rel="tag">GitHub</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#tutorials" class="page__taxonomy-item" rel="tag">Tutorials</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#version-control" class="page__taxonomy-item" rel="tag">Version Control</a>
+    
+    </span>
+  </p>
+
+
+
+
+      </footer>
+
+      <!-- Social sharing disabled -->
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="http://localhost:4000/arduino/" class="pagination--pager" title="Distance Measurement using Ultrasonic Sensor and Arduino
+">Previous</a>
+    
+    
+      <a href="http://localhost:4000/arduino-radar/" class="pagination--pager" title="Radar Object Detector Using Arduino
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Google_Summer_of_Code_sun_logo_2022.svg/1280px-Google_Summer_of_Code_sun_logo_2022.svg.png"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/gsoc/" rel="permalink">Google Summer of Code: AI-ready Dataset Metadata as a Service
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://www.proxpc.com/media/uploads/2024/07/10/introduction-to-pytorch-and-tensorflow.png"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/tensorflow/" rel="permalink">Install TensorFlow GPU on WSL2/Ubuntu 24.04 (Windows 10/11) - CUDA, cuDNN, TensorRT &amp; PyTorch - GPU
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://user-images.githubusercontent.com/76707560/164144474-7c419780-80e2-403f-85fe-23ead4b12d69.jpg"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/arduino-radar/" rel="permalink">Radar Object Detector Using Arduino
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://cdn.hashnode.com/res/hashnode/image/upload/v1690391762062/5084f275-6bfe-4596-bdcb-cda894013137.jpeg?auto=compress,format&format=webp"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/arduino/" rel="permalink">Distance Measurement using Ultrasonic Sensor and Arduino
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<a href="/sitemap/">Sitemap</a>
+<!-- end custom footer snippets -->
+
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/HarshShinde0"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Harsh Shinde. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,760 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Install TensorFlow GPU on WSL2/Ubuntu 24.04 (Windows 10/11) - CUDA, cuDNN, TensorRT &amp; PyTorch - GPU - Harsh Shinde</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Harsh Shinde">
+<meta property="og:title" content="Install TensorFlow GPU on WSL2/Ubuntu 24.04 (Windows 10/11) - CUDA, cuDNN, TensorRT &amp; PyTorch - GPU">
+
+
+  <link rel="canonical" href="http://localhost:4000/tensorflow/">
+  <meta property="og:url" content="http://localhost:4000/tensorflow/">
+
+
+
+  <meta property="og:description" content="A complete step-by-step guide to installing TensorFlow GPU with CUDA, cuDNN, TensorRT, and PyTorch on WSL2/Ubuntu 24.04 for Windows 10/11.">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2024-07-04T00:00:00+05:30">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Harsh Shinde",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Harsh Shinde Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="http://localhost:4000/images/apple-touch-icon-57x57.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="60x60" href="http://localhost:4000/images/apple-touch-icon-60x60.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="76x76" href="http://localhost:4000/images/apple-touch-icon-76x76.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="120x120" href="http://localhost:4000/images/apple-touch-icon-120x120.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="152x152" href="http://localhost:4000/images/apple-touch-icon-152x152.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/images/apple-touch-icon-180x180.png?v=M44lzPylqQ">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-32x32.png?v=M44lzPylqQ" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/android-chrome-192x192.png?v=M44lzPylqQ" sizes="192x192">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-96x96.png?v=M44lzPylqQ" sizes="96x96">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-16x16.png?v=M44lzPylqQ" sizes="16x16">
+<link rel="manifest" href="http://localhost:4000/images/manifest.json?v=M44lzPylqQ">
+<link rel="mask-icon" href="http://localhost:4000/images/safari-pinned-tab.svg?v=M44lzPylqQ" color="#000000">
+<link rel="shortcut icon" href="/images/favicon.ico?v=M44lzPylqQ">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="http://localhost:4000/images/mstile-144x144.png?v=M44lzPylqQ">
+<meta name="msapplication-config" content="http://localhost:4000/images/browserconfig.xml?v=M44lzPylqQ">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/academicons.css"/>
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/">Harsh Shinde</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/portfolio/">Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Blogs</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/files/HarshResume.pdf">Resume</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="http://localhost:4000/images/profile.png" class="author__avatar" alt="Harsh Shinde">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Harsh Shinde</h3>
+    <p class="author__bio">Machine Learning & Geo-AI</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> India</li>
+      
+      
+      
+      
+        <li><a href="mailto:harshinde.hks@gmail.com"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+      
+      
+       
+      
+        <li><a href="https://twitter.com/harshinde_hks"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+      
+      
+        <li><a href="https://www.linkedin.com/in/harshshinde"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/HarshShinde0"><i class="fab fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://scholar.google.com/citations?user=70E2Rp0AAAAJ&hl=en"><i class="fas fa-fw fa-graduation-cap"></i> Google Scholar</a></li>
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Install TensorFlow GPU on WSL2/Ubuntu 24.04 (Windows 10/11) - CUDA, cuDNN, TensorRT &amp; PyTorch - GPU">
+    <meta itemprop="description" content="A complete step-by-step guide to installing TensorFlow GPU with CUDA, cuDNN, TensorRT, and PyTorch on WSL2/Ubuntu 24.04 for Windows 10/11.">
+    <meta itemprop="datePublished" content="July 04, 2024">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Install TensorFlow GPU on WSL2/Ubuntu 24.04 (Windows 10/11) - CUDA, cuDNN, TensorRT &amp; PyTorch - GPU
+</h1>
+          
+        
+        
+        
+        
+             
+
+    
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>Setting up deep learning libraries with GPU support can be tricky, especially on Windows Subsystem for Linux (WSL2). This guide outlines the exact, step-by-step commands to configure <strong>TensorFlow GPU</strong>, <strong>CUDA</strong>, <strong>cuDNN</strong>, <strong>TensorRT</strong>, and <strong>PyTorch</strong> on WSL2 running Ubuntu 24.04.</p>
+
+<hr />
+
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+  <li>Windows 10 (Build 19044 or higher) or Windows 11</li>
+  <li>WSL2 installed and running Ubuntu 24.04</li>
+  <li>NVIDIA GPU with compute capability 3.5 or higher</li>
+  <li>Latest NVIDIA drivers installed on the Windows host</li>
+</ul>
+
+<hr />
+
+<h3 id="step-1-system-update">Step 1: System Update</h3>
+<p>First, update your package lists, upgrade existing packages, and install essential compiler tools:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt update
+<span class="nb">sudo </span>apt upgrade <span class="nt">-y</span>
+<span class="nb">sudo </span>apt <span class="nb">install </span>build-essential <span class="nt">-y</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="step-2-install-miniconda">Step 2: Install Miniconda</h3>
+<p>Miniconda is highly recommended for managing Python virtual environments safely and cleanly:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="step-3-install-cuda-toolkit">Step 3: Install CUDA Toolkit</h3>
+<p>Download and install the NVIDIA CUDA Toolkit (version <code class="language-plaintext highlighter-rouge">12.1.1</code> in this example):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://developer.download.nvidia.com/compute/cuda/12.1.1/local_installers/cuda_12.1.1_530.30.02_linux.run
+<span class="nb">sudo </span>sh cuda_12.1.1_530.30.02_linux.run
+</code></pre></div></div>
+
+<blockquote>
+  <p>[!NOTE]
+<strong>Environment Setup</strong>
+Add CUDA to your environment variables by appending these lines to your <code class="language-plaintext highlighter-rouge">~/.bashrc</code>:</p>
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/cuda-12.1/bin<span class="k">${</span><span class="nv">PATH</span>:+:<span class="k">${</span><span class="nv">PATH</span><span class="k">}}</span>
+<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/usr/local/cuda-12.1/lib64<span class="k">${</span><span class="nv">LD_LIBRARY_PATH</span>:+:<span class="k">${</span><span class="nv">LD_LIBRARY_PATH</span><span class="k">}}</span>
+</code></pre></div>  </div>
+</blockquote>
+
+<p>Apply the changes to your current terminal:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> ~/.bashrc
+</code></pre></div></div>
+
+<p>Configure dynamic linker run-time bindings:</p>
+<ol>
+  <li>Open <code class="language-plaintext highlighter-rouge">/etc/ld.so.conf</code> with root access and add: <code class="language-plaintext highlighter-rouge">/usr/local/cuda-12.1/lib64</code></li>
+  <li>Run:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>ldconfig
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>Verify your CUDA installation and system paths:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="nv">$PATH</span>
+<span class="nb">echo</span> <span class="nv">$LD_LIBRARY_PATH</span>
+<span class="nb">sudo </span>ldconfig <span class="nt">-p</span> | <span class="nb">grep </span>cuda
+nvcc <span class="nt">--version</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="step-4-install-cudnn">Step 4: Install cuDNN</h3>
+<p>Download cuDNN from the <a href="https://developer.nvidia.com/rdp/cudnn-archive">NVIDIA cuDNN Archive</a> (requires free NVIDIA Developer account). Extract and copy the libraries to your CUDA installation directory:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tar</span> <span class="nt">-xvf</span> cudnn-linux-x86_64-8.9.7.29_cuda12-archive.tar.xz
+<span class="nb">cd </span>cudnn-linux-x86_64-8.9.7.29_cuda12-archive
+<span class="nb">sudo cp </span>include/cudnn<span class="k">*</span>.h /usr/local/cuda-12.1/include
+<span class="nb">sudo cp </span>lib/libcudnn<span class="k">*</span> /usr/local/cuda-12.1/lib64
+<span class="nb">sudo chmod </span>a+r /usr/local/cuda-12.1/include/cudnn<span class="k">*</span>.h /usr/local/cuda-12.1/lib64/libcudnn<span class="k">*</span>
+<span class="nb">cd</span> ..
+</code></pre></div></div>
+
+<blockquote>
+  <p>[!TIP]
+<strong>Optional: Test cuDNN Installation</strong>
+You can verify that cuDNN initializes correctly by creating a test file <code class="language-plaintext highlighter-rouge">test_cudnn.c</code>:</p>
+  <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;cudnn.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">cudnnHandle_t</span> <span class="n">handle</span><span class="p">;</span>
+    <span class="n">cudnnStatus_t</span> <span class="n">status</span> <span class="o">=</span> <span class="n">cudnnCreate</span><span class="p">(</span><span class="o">&amp;</span><span class="n">handle</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">==</span> <span class="n">CUDNN_STATUS_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"cuDNN successfully initialized.</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"cuDNN initialization failed.</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">cudnnDestroy</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>  </div>
+  <p>Compile and run the test using:</p>
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcc <span class="nt">-o</span> test_cudnn test_cudnn.c <span class="nt">-I</span>/usr/local/cuda-12.1/include <span class="nt">-L</span>/usr/local/cuda-12.1/lib64 <span class="nt">-lcudnn</span>
+./test_cudnn
+</code></pre></div>  </div>
+</blockquote>
+
+<hr />
+
+<h3 id="step-5-install-tensorrt">Step 5: Install TensorRT</h3>
+<p>Download the TensorRT tarball from <a href="https://developer.nvidia.com/tensorrt/download">NVIDIA TensorRT</a> and install it:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tar</span> <span class="nt">-xzvf</span> TensorRT-8.6.1.6.Linux.x86_64-gnu.cuda-12.0.tar.gz
+<span class="nb">sudo mv </span>TensorRT-8.6.1.6 /usr/local/TensorRT-8.6.1
+</code></pre></div></div>
+
+<p>Update your environment variables in <code class="language-plaintext highlighter-rouge">~/.bashrc</code>:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/cuda-12.1/bin:/usr/local/TensorRT-8.6.1/bin:<span class="nv">$PATH</span>
+<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/usr/local/cuda-12.1/lib64:/usr/local/TensorRT-8.6.1/lib:<span class="nv">$LD_LIBRARY_PATH</span>
+</code></pre></div></div>
+
+<p>Apply the updates:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> ~/.bashrc
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="step-6-create-conda-environment-and-install-tensorflow">Step 6: Create Conda Environment and Install TensorFlow</h3>
+<p>Create a dedicated environment for TensorFlow and install the packages:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda create <span class="nt">--name</span> tf <span class="nv">python</span><span class="o">=</span>3.9 <span class="nt">-y</span>
+conda activate tf
+python <span class="nt">-m</span> pip <span class="nb">install </span>tensorflow[and-cuda]
+</code></pre></div></div>
+
+<p>Verify that TensorFlow is successfully detecting your GPU:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-c</span> <span class="s2">"import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="step-7-install-tensorrt-python-bindings">Step 7: Install TensorRT Python Bindings</h3>
+<p>Install the wheels for TensorRT within your Conda environment to accelerate inference:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /usr/local/TensorRT-8.6.1/python
+pip <span class="nb">install </span>tensorrt-8.6.1-cp39-none-linux_x86_64.whl
+pip <span class="nb">install </span>tensorrt_dispatch-8.6.1-cp39-none-linux_x86_64.whl
+pip <span class="nb">install </span>tensorrt_lean-8.6.1-cp39-none-linux_x86_64.whl
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="step-8-install-jupyterlab">Step 8: Install JupyterLab</h3>
+<p>Configure JupyterLab for your workspace:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>jupyterlab
+jupyter lab
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="step-9-install-pytorch-with-gpu-support">Step 9: Install PyTorch with GPU Support</h3>
+<p>Install PyTorch with matched CUDA <code class="language-plaintext highlighter-rouge">12.1</code> builds:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>torch torchvision torchaudio <span class="nt">--extra-index-url</span> https://download.pytorch.org/whl/cu121
+</code></pre></div></div>
+
+<p>Verify PyTorch GPU access:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-c</span> <span class="s2">"import torch; print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0))"</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p>If you encounter any issues:</p>
+<ul>
+  <li><strong>NVIDIA Drivers:</strong> Ensure your NVIDIA drivers are up to date on Windows.</li>
+  <li><strong>WSL2 GPU View:</strong> Check if WSL2 can see your GPU by running <code class="language-plaintext highlighter-rouge">nvidia-smi</code> in the terminal.</li>
+  <li><strong>Paths Check:</strong> Verify environment variables: <code class="language-plaintext highlighter-rouge">echo $LD_LIBRARY_PATH</code>.</li>
+  <li><strong>CUDA Version:</strong> Make sure you’re using the correct CUDA version for your GPU.</li>
+</ul>
+
+<hr />
+
+<h3 id="performance-tips">Performance Tips</h3>
+<p>To optimize GPU performance:</p>
+<ul>
+  <li><strong>TensorRT:</strong> Use TensorRT for inference optimization.</li>
+  <li><strong>Mixed Precision:</strong> Enable mixed precision training when possible.</li>
+  <li><strong>GPU Memory:</strong> Monitor GPU memory usage with <code class="language-plaintext highlighter-rouge">nvidia-smi</code>.</li>
+  <li><strong>Isolation:</strong> Consider using Docker containers for isolated environments.</li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/tags/#cuda" class="page__taxonomy-item" rel="tag">CUDA</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#deep-learning" class="page__taxonomy-item" rel="tag">Deep Learning</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#gpu-setup" class="page__taxonomy-item" rel="tag">GPU Setup</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#pytorch" class="page__taxonomy-item" rel="tag">PyTorch</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#tensorflow" class="page__taxonomy-item" rel="tag">TensorFlow</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#wsl2" class="page__taxonomy-item" rel="tag">WSL2</a>
+    
+    </span>
+  </p>
+
+
+
+
+      </footer>
+
+      <!-- Social sharing disabled -->
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="http://localhost:4000/arduino-radar/" class="pagination--pager" title="Radar Object Detector Using Arduino
+">Previous</a>
+    
+    
+      <a href="http://localhost:4000/gsoc/" class="pagination--pager" title="Google Summer of Code: AI-ready Dataset Metadata as a Service
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Google_Summer_of_Code_sun_logo_2022.svg/1280px-Google_Summer_of_Code_sun_logo_2022.svg.png"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/gsoc/" rel="permalink">Google Summer of Code: AI-ready Dataset Metadata as a Service
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://user-images.githubusercontent.com/76707560/164144474-7c419780-80e2-403f-85fe-23ead4b12d69.jpg"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/arduino-radar/" rel="permalink">Radar Object Detector Using Arduino
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://user-images.githubusercontent.com/87325345/199505243-848a53d1-b9dc-40e0-9dd9-a369b0d4ad59.jpg"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/git/" rel="permalink">An Intro to Git and GitHub
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "https://cdn.hashnode.com/res/hashnode/image/upload/v1690391762062/5084f275-6bfe-4596-bdcb-cda894013137.jpeg?auto=compress,format&format=webp"
+          
+          alt="">
+      </div>
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/arduino/" rel="permalink">Distance Measurement using Ultrasonic Sensor and Arduino
+</a>
+      
+    </h2>
+    
+    
+
+        
+
+    
+
+
+
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<a href="/sitemap/">Sitemap</a>
+<!-- end custom footer snippets -->
+
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/HarshShinde0"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Harsh Shinde. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+
