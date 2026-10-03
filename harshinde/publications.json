@@ -1,0 +1,57 @@
+[
+  {
+    "title": "A Modular Dual-Pipeline System for Web Crawling and Intelligent Document Retrieval-Augmented Generation",
+    "author": "Kaustubh Gavankar, Shilpi, Harsh Shinde",
+    "venue": "Proc. AICTA 2026 (NIT Silchar)",
+    "abstract": "Retrieving precise information from large, heterogeneous collections of scientific and technical documents remains a critical challenge for specialized scientific organizational domains. Documents are frequently distributed across dynamically rendered web pages, nested tables, and low-resolution scanned reports. Traditional keyword search methods fail to capture semantic intent, while standard Large Language Models (LLM) suffer from hallucinations and limited parametric knowledge. To address these limitations, this work presents a secure, modular, on-premise dual-pipeline Retrieval-Augmented Generation (RAG) system. The pipeline integrates a stateful browser crawler for dynamic web content, an adaptive layout-aware ingestion parser with selective Optical Character Recognition (OCR) fallback, and a parent-child vector indexing architecture that decouples semantic representation from synthesis space. Evaluated on a 500-document remote sensing corpus from the National Remote Sensing Centre (NRSC), the system reduces storage footprint by 4.3×, cuts ingestion time by 78% over a full-OCR baseline, preserves tabular layouts, and mitigates context fragmentation. The system supports strict data privacy by running fully on-premise, returning more grounded and verifiable responses than parametric-only baselines.",
+    "links": {
+      "paper": "",
+      "code": ""
+    },
+    "type": "publication",
+    "key": "aicta2026",
+    "image": "rag.svg"
+  },
+  {
+    "title": "Landslide Detection and Mapping Using Deep Learning Across Multi-Source Satellite Data and Geographic Regions",
+    "author": "Harsh Shinde, Rahul Burange, Omkar Mutyalwar",
+    "venue": "JETIR 2025",
+    "abstract": "Landslides pose severe threats to infrastructure, economies, and human lives, necessitating accurate detection and predictive mapping across diverse geographic regions. With advancements in deep learning and remote sensing, automated landslide detection has become increasingly effective. This study presents a comprehensive approach integrating multi-source satellite imagery and deep learning models to enhance landslide identification and prediction. We leverage Sentinel-2 multispectral data and ALOS PALSAR-derived slope and Digital Elevation Model (DEM) layers to capture critical environmental features influencing landslide occurrences. Various geospatial analysis techniques are employed to assess the impact of terra in characteristics, vegetation cover, and rainfall on detection accuracy. Additionally, we evaluate the performance of multiple stateof-the-art deep learning segmentation models, including U-Net, DeepLabV3+, and Res-Net, to determine their effectiveness in landslide detection. The proposed framework contributes to the development of reliable early warning systems, improved disaster risk management, and sustainable land-use planning. Our findings provide valuable insights into the potential of deep learning and multi-source remote sensing in creating robust, scalable, and transferable landslide prediction models.",
+    "links": {
+      "paper": "https://arxiv.org/abs/2507.01123v2",
+      "code": "https://github.com/HarshShinde0/Deepslide",
+      "demo": "https://huggingface.co/spaces/harshinde/DeepSlide",
+      "dataset": "https://huggingface.co/datasets/harshinde/LandSlide4Sense"
+    },
+    "type": "publication",
+    "key": "deepslide",
+    "image": "landslide.jpg"
+  },
+  {
+    "title": "Seasonal and Spatial Assessment of Urban Heat Island and Land Surface Temperature in Nagpur using Landsat Remote Sensing",
+    "author": "Harsh Shinde, Sanjay V. Balamwar, Sanskar Shete",
+    "venue": "International Journal of Engineering and Geosciences (Under Review) / EarthArXiv 2025",
+    "abstract": "Urban Heat Island (UHI) intensity and Land Surface Temperature (LST) variations are critical indicators of urban environmental change in rapidly growing cities. This study examines spatial and temporal UHI and LST patterns in Nagpur using Landsat 8 and 9 thermal imagery for January and May of 2023 and 2024, capturing seasonal and inter-annual variations. Supervised classification was applied to map Land Use Land Cover (LULC) classes in 2024, and LST was derived using standard radiometric conversion workflows. Comparative analysis between years revealed LST mean variations ranging from 27.4°C to 29.9°C across seasons, with UHI intensities spanning from -19.9°C to 18.3°C. Strong correlations between LULC types and surface temperatures underscore the influence of built-up areas and vegetation on urban thermal patterns. This integrated remote sensing assessment provides actionable insights for urban thermal management and supports climate-responsive urban planning in mid-sized Indian cities.",
+    "links": {
+      "paper": "https://eartharxiv.org/repository/view/11264/",
+      "code": "https://github.com/HarshShinde0/MRSAC"
+    },
+    "type": "publication",
+    "key": "uhi_nagpur",
+    "image": "lulc.jpg"
+  },
+  {
+    "title": "Tree & Orchard Detection and Counting from High-Resolution Satellite Images",
+    "author": "Harsh Shinde, Aditya Singh, Ankit Kirtane",
+    "venue": "ISRO-RRSC VNIT Challenge (2nd Runner-Up) 2024",
+    "abstract": "Standard bounding box detectors fail in dense orchards because overlapping crowns blend into a single cluster. For the VNIT GeoSpatial AI Challenge (ISRO-RRSC), we tackled this with density map regression on two high-resolution 4-band satellite scenes (RGB + Near-Infrared). We tiled the imagery into 512×512 patches with a 128-pixel overlap, yielding 153 training and 40 test tiles. After annotating trees on Roboflow, we converted bounding boxes into point masks by drawing small circles at each tree center (capped at 20 px) so adjacent crowns stayed separated. We then convolved these point masks with a Gaussian filter (sigma = 2) to build continuous density targets. Our model is a 3-level PyTorch U-Net with skip connections and a final ReLU layer to enforce non-negative values. At inference time, summing all pixel values in the predicted heatmap gives the tree count directly without non-maximum suppression. The complete pipeline handles tiling, mask generation, training, and full-scene heatmap overlays, winning 2nd Runner-Up.",
+    "links": {
+      "code": "https://github.com/HarshShinde0/tree-orchard-detection",
+      "kaggle": "https://www.kaggle.com/code/harshshinde8/tree-orchard-detection",
+      "dataset": "https://huggingface.co/datasets/harshinde/tree-orchard-detection"
+    },
+    "type": "project",
+    "key": "tree_orchard",
+    "image": "unet_architecture.png"
+  }
+]
